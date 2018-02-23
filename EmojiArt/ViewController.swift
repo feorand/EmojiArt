@@ -14,7 +14,7 @@ class ViewController: UIViewController
     
     @IBOutlet weak var dropView: UIView!
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var backgroundView: BackgroundView!
     
     override func viewDidLoad() {
         let dropInteraction = UIDropInteraction(delegate: self)
@@ -23,5 +23,11 @@ class ViewController: UIViewController
 }
 
 extension ViewController: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
+    }
     
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
 }

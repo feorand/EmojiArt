@@ -8,14 +8,11 @@
 
 import UIKit
 
-class BackgroundView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
+class BackgroundView: UIView
+{
+    var image: UIImage? { didSet{ setNeedsDisplay() } }
+    
     override func draw(_ rect: CGRect) {
-        // Drawing code
+        image?.draw(in: bounds)
     }
-    */
-
 }

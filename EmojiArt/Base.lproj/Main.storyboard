@@ -21,16 +21,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JnH-Yy-lvd">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I4O-0N-7NJ">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2js-wH-mMW" customClass="BackgroundView" customModule="EmojiArt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                    </imageView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="I4O-0N-7NJ" firstAttribute="top" secondItem="JnH-Yy-lvd" secondAttribute="top" id="7Go-ii-OL8"/>
-                                    <constraint firstAttribute="bottom" secondItem="I4O-0N-7NJ" secondAttribute="bottom" id="7Y6-Ir-1dP"/>
-                                    <constraint firstItem="I4O-0N-7NJ" firstAttribute="leading" secondItem="JnH-Yy-lvd" secondAttribute="leading" id="Sdf-pX-kbV"/>
-                                    <constraint firstAttribute="trailing" secondItem="I4O-0N-7NJ" secondAttribute="trailing" id="rQB-Tt-q8u"/>
+                                    <constraint firstAttribute="bottom" secondItem="2js-wH-mMW" secondAttribute="bottom" id="6AK-eD-OIg"/>
+                                    <constraint firstItem="2js-wH-mMW" firstAttribute="leading" secondItem="JnH-Yy-lvd" secondAttribute="leading" id="Ekg-kV-uoI"/>
+                                    <constraint firstAttribute="trailing" secondItem="2js-wH-mMW" secondAttribute="trailing" id="HUR-kX-fNa"/>
+                                    <constraint firstItem="2js-wH-mMW" firstAttribute="top" secondItem="JnH-Yy-lvd" secondAttribute="top" id="daf-I4-fby"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -44,8 +45,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundView" destination="2js-wH-mMW" id="kdN-an-1B9"/>
                         <outlet property="dropView" destination="JnH-Yy-lvd" id="TZ0-UH-Stf"/>
-                        <outlet property="imageView" destination="I4O-0N-7NJ" id="Lf0-0O-8dV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
