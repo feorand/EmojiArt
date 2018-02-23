@@ -54,7 +54,7 @@ extension ViewController: UIDropInteractionDelegate {
         
         session.loadObjects(ofClass: UIImage.self) { [weak self] images in
             if let imageItem = images.first, let image = imageItem as? UIImage {
-                //self?.backgroundView.image = image
+                self?.backgroundView.image = image
             }
         }
     }
