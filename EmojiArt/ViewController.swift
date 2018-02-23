@@ -12,8 +12,16 @@ class ViewController: UIViewController
 {
     var imageURL: URL?
     
-    @IBOutlet weak var dragView: UIView!
+    @IBOutlet weak var dropView: UIView!
     
     @IBOutlet weak var imageView: UIImageView!
+    
+    override func viewDidLoad() {
+        let dropInteraction = UIDropInteraction(delegate: self)
+        dropView.addInteraction(dropInteraction)
+    }
 }
 
+extension ViewController: UIDropInteractionDelegate {
+    
+}

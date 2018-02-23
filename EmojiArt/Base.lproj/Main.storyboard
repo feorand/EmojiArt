@@ -44,7 +44,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="dragView" destination="JnH-Yy-lvd" id="TZ0-UH-Stf"/>
+                        <outlet property="dropView" destination="JnH-Yy-lvd" id="TZ0-UH-Stf"/>
                         <outlet property="imageView" destination="I4O-0N-7NJ" id="Lf0-0O-8dV"/>
                     </connections>
                 </viewController>
