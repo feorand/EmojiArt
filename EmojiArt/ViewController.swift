@@ -10,7 +10,21 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    var imageURL: URL?
+    var imageURL: URL? {
+        didSet {
+            if let url = imageURL {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let imageData = try? Data(contentsOf: url)
+                    if let imageData = imageData, let image = UIImage(data: imageData) {
+                        DispatchQueue.main.async {
+                            self.backgroundView.image = image
+                        }
+                    }
+
+                }
+            }
+        }
+    }
     
     @IBOutlet weak var dropView: UIView!
     
@@ -29,5 +43,19 @@ extension ViewController: UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .copy)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
+            if let urlItem = urls.first, let url = urlItem as? URL {
+                self?.imageURL = url
+            }
+        }
+        
+        session.loadObjects(ofClass: UIImage.self) { [weak self] images in
+            if let imageItem = images.first, let image = imageItem as? UIImage {
+                //self?.backgroundView.image = image
+            }
+        }
     }
 }
