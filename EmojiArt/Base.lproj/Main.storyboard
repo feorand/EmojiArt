@@ -44,7 +44,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiItem" id="Lme-cK-4lb" customClass="EmojiCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiCell" id="Lme-cK-4lb" customClass="EmojiCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -90,15 +90,14 @@
                         <constraints>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Ios-o4-Yjn"/>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="top" secondItem="r84-vT-JWA" secondAttribute="bottom" id="LCA-LW-bzA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r84-vT-JWA" secondAttribute="trailing" id="OeL-yq-tHH"/>
+                            <constraint firstAttribute="trailing" secondItem="r84-vT-JWA" secondAttribute="trailing" id="OeL-yq-tHH"/>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="U2a-24-vdk"/>
-                            <constraint firstItem="r84-vT-JWA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YwB-An-bhJ"/>
+                            <constraint firstItem="r84-vT-JWA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YwB-An-bhJ"/>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Zeg-Pt-nNw"/>
                             <constraint firstItem="r84-vT-JWA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="qVf-ob-jyK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="aqj-eq-lZW"/>
                     <connections>
                         <outlet property="backgroundView" destination="2js-wH-mMW" id="kdN-an-1B9"/>
                         <outlet property="collectionView" destination="r84-vT-JWA" id="y3g-fv-bhY"/>
@@ -107,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="958.59374999999989" y="108.59375"/>
+            <point key="canvasLocation" x="781" y="-23"/>
         </scene>
         <!--Emoji Documents Table View Controller-->
         <scene sceneID="lXn-iy-s7F">

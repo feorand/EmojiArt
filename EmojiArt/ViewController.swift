@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController
 {
+    let emojis = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
+    
     var imageURL: URL? {
         didSet {
             if let url = imageURL {
@@ -33,13 +35,16 @@ class ViewController: UIViewController
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         let dropInteraction = UIDropInteraction(delegate: self)
         dropView.addInteraction(dropInteraction)
     }
 }
 
-extension ViewController: UIDropInteractionDelegate {
+extension ViewController: UIDropInteractionDelegate
+{
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
     }
@@ -60,5 +65,24 @@ extension ViewController: UIDropInteractionDelegate {
                 self?.backgroundView.image = image
             }
         }
+    }
+}
+
+extension ViewController: UICollectionViewDelegate
+{
+}
+
+extension ViewController: UICollectionViewDataSource
+{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return emojis.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+        if let cell = cell as? EmojiCollectionViewCell {
+            cell.label.text = emojis[indexPath.item]
+        }
+        return cell
     }
 }
