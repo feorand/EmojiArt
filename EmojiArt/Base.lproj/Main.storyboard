@@ -15,8 +15,8 @@
             <objects>
                 <splitViewController id="Sii-pR-frU" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="txY-Vr-XYt" kind="relationship" relationship="detailViewController" id="Uvi-cM-tAi"/>
                         <segue destination="bez-we-P2Z" kind="relationship" relationship="masterViewController" id="FuD-yE-3Mo"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="detailViewController" id="aFf-P2-HqF"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHJ-pU-s1Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -31,11 +31,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="703.5" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="r84-vT-JWA">
+                                <rect key="frame" x="0.0" y="0.0" width="703.5" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="s7g-X6-lOx"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UrP-6J-UwW">
+                                    <size key="itemSize" width="60" height="60"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiItem" id="Lme-cK-4lb">
+                                        <rect key="frame" x="0.0" y="10" width="60" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JnH-Yy-lvd">
-                                <rect key="frame" x="0.0" y="0.0" width="703.5" height="768"/>
+                                <rect key="frame" x="0.0" y="80" width="703.5" height="688"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2js-wH-mMW" customClass="BackgroundView" customModule="EmojiArt" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="703.5" height="768"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="703" height="688"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -50,10 +73,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="JnH-Yy-lvd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="2qv-DD-EH3"/>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Ios-o4-Yjn"/>
+                            <constraint firstItem="JnH-Yy-lvd" firstAttribute="top" secondItem="r84-vT-JWA" secondAttribute="bottom" id="LCA-LW-bzA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r84-vT-JWA" secondAttribute="trailing" id="OeL-yq-tHH"/>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="U2a-24-vdk"/>
+                            <constraint firstItem="r84-vT-JWA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YwB-An-bhJ"/>
                             <constraint firstItem="JnH-Yy-lvd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Zeg-Pt-nNw"/>
+                            <constraint firstItem="r84-vT-JWA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="qVf-ob-jyK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -65,7 +91,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="959" y="109"/>
+            <point key="canvasLocation" x="958.59374999999989" y="108.59375"/>
         </scene>
         <!--Emoji Documents Table View Controller-->
         <scene sceneID="lXn-iy-s7F">
@@ -103,24 +129,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fEB-V2-aCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="959" y="951"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="7VE-1o-QFo">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="txY-Vr-XYt" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LSf-tl-Zw9">
-                        <rect key="frame" x="0.0" y="20" width="703.5" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="uhk-Cb-sE6"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rv5-rn-oEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="179" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9A0-CK-yao">
