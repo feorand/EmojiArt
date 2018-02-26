@@ -44,13 +44,28 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiItem" id="Lme-cK-4lb">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiItem" id="Lme-cK-4lb" customClass="EmojiCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😀" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZu-en-4r0">
+                                                    <rect key="frame" x="3" y="0.5" width="54" height="60"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="FZu-en-4r0" firstAttribute="centerX" secondItem="Lme-cK-4lb" secondAttribute="centerX" id="Zzw-hA-tzr"/>
+                                            <constraint firstItem="FZu-en-4r0" firstAttribute="centerY" secondItem="Lme-cK-4lb" secondAttribute="centerY" id="ggC-oV-Imt"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="label" destination="FZu-en-4r0" id="yBx-U7-ltl"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -86,6 +101,7 @@
                     <navigationItem key="navigationItem" id="aqj-eq-lZW"/>
                     <connections>
                         <outlet property="backgroundView" destination="2js-wH-mMW" id="kdN-an-1B9"/>
+                        <outlet property="collectionView" destination="r84-vT-JWA" id="y3g-fv-bhY"/>
                         <outlet property="dropView" destination="JnH-Yy-lvd" id="TZ0-UH-Stf"/>
                     </connections>
                 </viewController>

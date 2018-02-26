@@ -30,7 +30,10 @@ class ViewController: UIViewController
     
     @IBOutlet weak var backgroundView: BackgroundView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
+        
         let dropInteraction = UIDropInteraction(delegate: self)
         dropView.addInteraction(dropInteraction)
     }
