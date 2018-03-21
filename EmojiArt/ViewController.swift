@@ -165,14 +165,18 @@ extension ViewController: UICollectionViewDropDelegate {
 
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
             } else {
+                let placeholder = UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "PlaceholderCell")
+                let placeholderContext = coordinator.drop(item.dragItem, to: placeholder)
+
                 item.dragItem.itemProvider.loadObject(ofClass: NSAttributedString.self) {(dragObject, error) in
-                    let stringItem = dragObject as! NSAttributedString
-                    
                     DispatchQueue.main.async {
-                        self.emojis.insert(stringItem.string, at: destinationIndexPath.item)
-                        collectionView.insertItems(at: [destinationIndexPath])
-                        
-                        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                        if let stringItem = dragObject as? NSAttributedString {
+                            placeholderContext.commitInsertion{ insertionIndexPath in
+                                self.emojis.insert(stringItem.string, at: insertionIndexPath.item)
+                            }
+                        } else {
+                            placeholderContext.deletePlaceholder()
+                        }
                     }
                 }
             }
