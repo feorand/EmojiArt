@@ -150,6 +150,17 @@ extension ViewController: UICollectionViewDropDelegate {
                 })
 
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+            } else {
+                item.dragItem.itemProvider.loadObject(ofClass: NSAttributedString.self) {(dragObject, error) in
+                    let stringItem = dragObject as! NSAttributedString
+                    
+                    DispatchQueue.main.async {
+                        self.emojis.insert(stringItem.string, at: destinationIndexPath.item)
+                        collectionView.insertItems(at: [destinationIndexPath])
+                        
+                        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                    }
+                }
             }
         }
     }
