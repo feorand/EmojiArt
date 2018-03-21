@@ -11,23 +11,7 @@ import UIKit
 class ViewController: UIViewController
 {
     let emojis = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
-    
-    var imageURL: URL? {
-        didSet {
-            if let url = imageURL {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    let imageData = try? Data(contentsOf: url)
-                    if let imageData = imageData, let image = UIImage(data: imageData) {
-                        DispatchQueue.main.async {
-                            self.backgroundView.image = image
-                        }
-                    }
 
-                }
-            }
-        }
-    }
-    
     @IBOutlet weak var dropView: UIView! {
         didSet {
             let dropInteraction = UIDropInteraction(delegate: self)
@@ -35,16 +19,53 @@ class ViewController: UIViewController
         }
     }
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollView: UIScrollView! {
+        didSet {
+            scrollView.maximumZoomScale = 5.0
+            scrollView.minimumZoomScale = 0.1
+            scrollView.delegate = self
+            scrollView.addSubview(backgroundView)
+        }
+    }
+    @IBOutlet weak var scrollWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollHeightConstraint: NSLayoutConstraint!
     
     var backgroundView = BackgroundView()
-    
-    var imageView = UIImageView()
+    var image: UIImage? {
+        get {
+            return backgroundView.image
+        }
+        
+        set {
+            scrollView?.zoomScale = 1.0
+            backgroundView.image = newValue
+            let size = newValue?.size ?? CGSize.zero
+            backgroundView.frame = CGRect(origin: CGPoint.zero, size: size)
+            scrollView?.contentSize = size
+            
+            if let dropView = dropView, size.width > 0, size.height > 0 {
+                scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+            }
+        }
+    }
     
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
+        }
+    }
+    
+    private func setImageFromNetAsync(imageURL: URL?) {
+        if let url = imageURL {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let imageData = try? Data(contentsOf: url)
+                if let imageData = imageData, let image = UIImage(data: imageData) {
+                    DispatchQueue.main.async {
+                        self.image = image
+                    }
+                }
+            }
         }
     }
 }
@@ -62,20 +83,16 @@ extension ViewController: UIDropInteractionDelegate
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
             if let urlItem = urls.first, let url = urlItem as? URL {
-                self?.imageURL = url
+                self?.setImageFromNetAsync(imageURL: url)
             }
         }
         
         session.loadObjects(ofClass: UIImage.self) { [weak self] images in
             if let imageItem = images.first, let image = imageItem as? UIImage {
-                self?.backgroundView.image = image
+                self?.image = image
             }
         }
     }
-}
-
-extension ViewController: UICollectionViewDelegate
-{
 }
 
 extension ViewController: UICollectionViewDataSource
@@ -90,5 +107,19 @@ extension ViewController: UICollectionViewDataSource
             cell.label.text = emojis[indexPath.item]
         }
         return cell
+    }
+}
+
+extension ViewController: UICollectionViewDelegate { }
+
+extension ViewController: UIScrollViewDelegate
+{
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return backgroundView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        scrollWidthConstraint.constant = scrollView.contentSize.width
+        scrollHeightConstraint.constant = scrollView.contentSize.height
     }
 }
