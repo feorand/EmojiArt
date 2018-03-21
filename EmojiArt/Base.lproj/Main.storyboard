@@ -72,17 +72,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JnH-Yy-lvd">
                                 <rect key="frame" x="0.0" y="80" width="703.5" height="688"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2js-wH-mMW" customClass="BackgroundView" customModule="EmojiArt" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="703" height="688"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oUX-7Y-YhI">
+                                        <rect key="frame" x="0.0" y="0.0" width="703.5" height="688"/>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="2js-wH-mMW" secondAttribute="bottom" id="6AK-eD-OIg"/>
-                                    <constraint firstItem="2js-wH-mMW" firstAttribute="leading" secondItem="JnH-Yy-lvd" secondAttribute="leading" id="Ekg-kV-uoI"/>
-                                    <constraint firstAttribute="trailing" secondItem="2js-wH-mMW" secondAttribute="trailing" id="HUR-kX-fNa"/>
-                                    <constraint firstItem="2js-wH-mMW" firstAttribute="top" secondItem="JnH-Yy-lvd" secondAttribute="top" id="daf-I4-fby"/>
+                                    <constraint firstAttribute="trailing" secondItem="oUX-7Y-YhI" secondAttribute="trailing" id="CaQ-ek-qhB"/>
+                                    <constraint firstItem="oUX-7Y-YhI" firstAttribute="leading" secondItem="JnH-Yy-lvd" secondAttribute="leading" id="GVS-ru-YoM"/>
+                                    <constraint firstAttribute="bottom" secondItem="oUX-7Y-YhI" secondAttribute="bottom" id="HN8-z1-o09"/>
+                                    <constraint firstItem="oUX-7Y-YhI" firstAttribute="top" secondItem="JnH-Yy-lvd" secondAttribute="top" id="Xnf-H6-AY5"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -99,9 +98,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="backgroundView" destination="2js-wH-mMW" id="kdN-an-1B9"/>
                         <outlet property="collectionView" destination="r84-vT-JWA" id="y3g-fv-bhY"/>
                         <outlet property="dropView" destination="JnH-Yy-lvd" id="TZ0-UH-Stf"/>
+                        <outlet property="scrollView" destination="oUX-7Y-YhI" id="PKX-ht-RCU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

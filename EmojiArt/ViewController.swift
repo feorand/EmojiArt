@@ -28,18 +28,24 @@ class ViewController: UIViewController
         }
     }
     
-    @IBOutlet weak var dropView: UIView!
+    @IBOutlet weak var dropView: UIView! {
+        didSet {
+            let dropInteraction = UIDropInteraction(delegate: self)
+            dropView.interactions += [dropInteraction]
+        }
+    }
     
-    @IBOutlet weak var backgroundView: BackgroundView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    var backgroundView = BackgroundView()
     
-    override func viewDidLoad() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        let dropInteraction = UIDropInteraction(delegate: self)
-        dropView.addInteraction(dropInteraction)
+    var imageView = UIImageView()
+    
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.delegate = self
+            collectionView.dataSource = self
+        }
     }
 }
 
