@@ -75,7 +75,9 @@ class ViewController: UIViewController
 extension ViewController: UIDropInteractionDelegate
 {
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
+        return session.canLoadObjects(ofClass: NSURL.self) &&
+            session.canLoadObjects(ofClass: UIImage.self) ||
+            session.canLoadObjects(ofClass: NSAttributedString.self)
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
@@ -83,15 +85,27 @@ extension ViewController: UIDropInteractionDelegate
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
-            if let urlItem = urls.first, let url = urlItem as? URL {
-                self?.setImageFromNetAsync(imageURL: url)
+        if session.localDragSession?.localContext as? UICollectionView == nil {
+            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
+                if let urlItem = urls.first, let url = urlItem as? URL {
+                    self?.setImageFromNetAsync(imageURL: url)
+                }
             }
-        }
-        
-        session.loadObjects(ofClass: UIImage.self) { [weak self] images in
-            if let imageItem = images.first, let image = imageItem as? UIImage {
-                self?.image = image
+            
+            session.loadObjects(ofClass: UIImage.self) { [weak self] images in
+                if let imageItem = images.first, let image = imageItem as? UIImage {
+                    self?.image = image
+                }
+            }
+        } else {
+            if let emoji = session.items.first?.localObject as? NSAttributedString {
+                let position = session.location(in: self.backgroundView)
+                let emojiView = UILabel(frame: CGRect.zero)
+                emojiView.center = position
+                emojiView.attributedText = emoji
+                emojiView.backgroundColor = .clear
+                emojiView.sizeToFit()
+                backgroundView.addSubview(emojiView)
             }
         }
     }
