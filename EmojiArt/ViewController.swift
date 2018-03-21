@@ -54,6 +54,7 @@ class ViewController: UIViewController
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.dragDelegate = self
+            collectionView.dropDelegate = self
         }
     }
     
@@ -116,9 +117,26 @@ extension ViewController: UICollectionViewDelegate { }
 extension ViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let cell = collectionView.cellForItem(at: indexPath) as! EmojiCollectionViewCell
-        let itemProvider = NSItemProvider(object: cell.label.attributedText!)
+        let emoji = cell.label.attributedText!
+        let itemProvider = NSItemProvider(object: emoji)
         let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = emoji
         return [dragItem]
+    }
+}
+
+extension ViewController: UICollectionViewDropDelegate {
+    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSAttributedString.self)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        let isLocal = session.items.first!.localObject != nil
+        return UICollectionViewDropProposal(operation: isLocal ? .move : .copy, intent: .insertAtDestinationIndexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        
     }
 }
 
