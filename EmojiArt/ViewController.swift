@@ -100,11 +100,11 @@ extension ViewController: UIDropInteractionDelegate
         } else {
             if let emoji = session.items.first?.localObject as? NSAttributedString {
                 let position = session.location(in: self.backgroundView)
-                let emojiView = UILabel(frame: CGRect.zero)
-                emojiView.center = position
+                let emojiView = UILabel()
                 emojiView.attributedText = emoji
                 emojiView.backgroundColor = .clear
                 emojiView.sizeToFit()
+                emojiView.center = position
                 backgroundView.addSubview(emojiView)
             }
         }
