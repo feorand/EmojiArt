@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    let emojis = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
+    var emojis = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
 
     @IBOutlet weak var dropView: UIView! {
         didSet {
@@ -121,6 +121,7 @@ extension ViewController: UICollectionViewDragDelegate {
         let itemProvider = NSItemProvider(object: emoji)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = emoji
+        session.localContext = collectionView
         return [dragItem]
     }
 }
@@ -131,12 +132,26 @@ extension ViewController: UICollectionViewDropDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        let isLocal = session.items.first!.localObject != nil
+        let isLocal = session.localDragSession?.localContext as? UICollectionView == collectionView
         return UICollectionViewDropProposal(operation: isLocal ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        
+        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+        for item in coordinator.items {
+            if let sourceIndexPath = item.sourceIndexPath {
+                let stringItem = item.dragItem.localObject as! NSAttributedString
+                
+                collectionView.performBatchUpdates({
+                    self.emojis.remove(at: sourceIndexPath.item)
+                    self.emojis.insert(stringItem.string, at: destinationIndexPath.item)
+                    collectionView.deleteItems(at: [sourceIndexPath])
+                    collectionView.insertItems(at: [destinationIndexPath])
+                })
+
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+            }
+        }
     }
 }
 
