@@ -53,6 +53,7 @@ class ViewController: UIViewController
         didSet {
             collectionView.delegate = self
             collectionView.dataSource = self
+            collectionView.dragDelegate = self
         }
     }
     
@@ -111,6 +112,15 @@ extension ViewController: UICollectionViewDataSource
 }
 
 extension ViewController: UICollectionViewDelegate { }
+
+extension ViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let cell = collectionView.cellForItem(at: indexPath) as! EmojiCollectionViewCell
+        let itemProvider = NSItemProvider(object: cell.label.attributedText!)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
+    }
+}
 
 extension ViewController: UIScrollViewDelegate
 {
