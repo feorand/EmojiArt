@@ -113,7 +113,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AIJ-MV-bjr">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AIJ-MV-bjr">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="50"/>
@@ -122,12 +122,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="centerX" secondItem="J4Q-L7-a58" secondAttribute="centerX" id="Ddl-Os-Z8A"/>
-                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="top" secondItem="J4Q-L7-a58" secondAttribute="top" id="Fp4-C1-9Vk"/>
-                                            <constraint firstAttribute="bottom" secondItem="AIJ-MV-bjr" secondAttribute="bottom" id="O1M-di-zKd"/>
-                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="leading" secondItem="J4Q-L7-a58" secondAttribute="leading" id="fQM-FQ-cAp"/>
-                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="centerY" secondItem="J4Q-L7-a58" secondAttribute="centerY" id="hkO-t0-KqH"/>
-                                            <constraint firstAttribute="trailing" secondItem="AIJ-MV-bjr" secondAttribute="trailing" id="r2T-wk-e9g"/>
+                                            <constraint firstAttribute="trailing" secondItem="AIJ-MV-bjr" secondAttribute="trailing" id="2hT-iY-yu8"/>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="leading" secondItem="J4Q-L7-a58" secondAttribute="leading" id="E2u-AC-sWt"/>
+                                            <constraint firstAttribute="bottom" secondItem="AIJ-MV-bjr" secondAttribute="bottom" id="ViA-Gr-9fz"/>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="top" secondItem="J4Q-L7-a58" secondAttribute="top" id="xhM-mV-ZeJ"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="textField" destination="AIJ-MV-bjr" id="9KW-B6-4nd"/>

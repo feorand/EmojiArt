@@ -137,6 +137,16 @@ extension ViewController: UICollectionViewDataSource
         if indexPath.section == 0 {
             if isAdding {
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputItemsCell", for: indexPath)
+                if let cell = cell as? InputItemsCollectionViewCell {
+                    cell.inputEndHandler = { [weak self, unowned cell] in
+                        self?.emojis = cell.textField.text!.map{ String($0) } + self!.emojis
+                        collectionView.reloadData()
+                        cell.textField.text = ""
+                        self?.isAdding = false
+                    }
+                    
+                    cell.textField.becomeFirstResponder()
+                }
             } else {
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddItemsCell", for: indexPath)
             }
