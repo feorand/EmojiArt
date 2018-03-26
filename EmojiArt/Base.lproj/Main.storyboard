@@ -67,7 +67,7 @@
                                             <outlet property="label" destination="FZu-en-4r0" id="yBx-U7-ltl"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PlaceholderCell" id="pUJ-k9-Udl" customClass="EmojiCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PlaceholderCell" id="pUJ-k9-Udl">
                                         <rect key="frame" x="70" y="10" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -84,7 +84,7 @@
                                             <constraint firstItem="BPI-LP-lmz" firstAttribute="centerX" secondItem="pUJ-k9-Udl" secondAttribute="centerX" id="NXt-EC-Ubp"/>
                                         </constraints>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddItemsCell" id="OeX-Dx-mTP" customClass="EmojiCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddItemsCell" id="OeX-Dx-mTP">
                                         <rect key="frame" x="140" y="10" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -105,6 +105,33 @@
                                             <constraint firstItem="yHt-tw-fu3" firstAttribute="centerY" secondItem="OeX-Dx-mTP" secondAttribute="centerY" id="OrY-RW-0Ph"/>
                                             <constraint firstItem="yHt-tw-fu3" firstAttribute="centerX" secondItem="OeX-Dx-mTP" secondAttribute="centerX" id="ciT-wU-VU0"/>
                                         </constraints>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InputItemsCell" id="J4Q-L7-a58" customClass="InputItemsCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                        <rect key="frame" x="210" y="10" width="60" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AIJ-MV-bjr">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="centerX" secondItem="J4Q-L7-a58" secondAttribute="centerX" id="Ddl-Os-Z8A"/>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="top" secondItem="J4Q-L7-a58" secondAttribute="top" id="Fp4-C1-9Vk"/>
+                                            <constraint firstAttribute="bottom" secondItem="AIJ-MV-bjr" secondAttribute="bottom" id="O1M-di-zKd"/>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="leading" secondItem="J4Q-L7-a58" secondAttribute="leading" id="fQM-FQ-cAp"/>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="centerY" secondItem="J4Q-L7-a58" secondAttribute="centerY" id="hkO-t0-KqH"/>
+                                            <constraint firstAttribute="trailing" secondItem="AIJ-MV-bjr" secondAttribute="trailing" id="r2T-wk-e9g"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="textField" destination="AIJ-MV-bjr" id="9KW-B6-4nd"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
