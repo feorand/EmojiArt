@@ -95,6 +95,9 @@
                                                     <rect key="frame" x="3" y="-6" width="54" height="72"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                                     <state key="normal" title="➕"/>
+                                                    <connections>
+                                                        <action selector="addCellButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="oS1-1G-n9a"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </view>

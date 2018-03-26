@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController
 {
     var emojis = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
+    var isAdding = false
 
     @IBOutlet weak var dropView: UIView! {
         didSet {
@@ -56,6 +57,11 @@ class ViewController: UIViewController
             collectionView.dragDelegate = self
             collectionView.dropDelegate = self
         }
+    }
+    
+    @IBAction func addCellButtonClicked() {
+        isAdding = true
+        collectionView.reloadData()
     }
     
     private func setImageFromNetAsync(imageURL: URL?) {
