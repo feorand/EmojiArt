@@ -113,16 +113,29 @@ extension ViewController: UIDropInteractionDelegate
 
 extension ViewController: UICollectionViewDataSource
 {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return emojis.count
+        if section == 0 {
+            return 1
+        } else {
+            return emojis.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
-        if let cell = cell as? EmojiCollectionViewCell {
-            cell.label.text = emojis[indexPath.item]
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddItemsCell", for: indexPath)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+            if let cell = cell as? EmojiCollectionViewCell {
+                cell.label.text = emojis[indexPath.item]
+            }
+            return cell
         }
-        return cell
     }
 }
 
@@ -131,6 +144,10 @@ extension ViewController: UICollectionViewDelegate { }
 extension ViewController: UICollectionViewDragDelegate
 {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        
+        if indexPath.section == 0 {
+            return []
+        }
         let cell = collectionView.cellForItem(at: indexPath) as! EmojiCollectionViewCell
         let emoji = cell.label.attributedText!
         let itemProvider = NSItemProvider(object: emoji)
@@ -148,6 +165,10 @@ extension ViewController: UICollectionViewDropDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        if destinationIndexPath?.section == 0 {
+            return UICollectionViewDropProposal(operation: .cancel)
+        }
+        
         let isLocal = session.localDragSession?.localContext as? UICollectionView == collectionView
         return UICollectionViewDropProposal(operation: isLocal ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
