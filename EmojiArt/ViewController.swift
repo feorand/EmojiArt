@@ -132,20 +132,36 @@ extension ViewController: UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell:UICollectionViewCell!
+        
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddItemsCell", for: indexPath)
-            return cell
+            if isAdding {
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputItemsCell", for: indexPath)
+            } else {
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddItemsCell", for: indexPath)
+            }
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
             if let cell = cell as? EmojiCollectionViewCell {
                 cell.label.text = emojis[indexPath.item]
             }
-            return cell
         }
+        
+        return cell
     }
 }
 
 extension ViewController: UICollectionViewDelegate { }
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0, isAdding {
+            return CGSize(width: 200, height: 60)
+        } else {
+            return CGSize(width: 60, height: 60)
+        }
+    }
+}
 
 extension ViewController: UICollectionViewDragDelegate
 {
