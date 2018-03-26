@@ -128,7 +128,8 @@ extension ViewController: UICollectionViewDataSource
 
 extension ViewController: UICollectionViewDelegate { }
 
-extension ViewController: UICollectionViewDragDelegate {
+extension ViewController: UICollectionViewDragDelegate
+{
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let cell = collectionView.cellForItem(at: indexPath) as! EmojiCollectionViewCell
         let emoji = cell.label.attributedText!
@@ -140,7 +141,8 @@ extension ViewController: UICollectionViewDragDelegate {
     }
 }
 
-extension ViewController: UICollectionViewDropDelegate {
+extension ViewController: UICollectionViewDropDelegate
+{
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSAttributedString.self)
     }

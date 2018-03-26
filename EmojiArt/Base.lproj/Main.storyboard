@@ -84,6 +84,25 @@
                                             <constraint firstItem="BPI-LP-lmz" firstAttribute="centerX" secondItem="pUJ-k9-Udl" secondAttribute="centerX" id="NXt-EC-Ubp"/>
                                         </constraints>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddItemsCell" id="OeX-Dx-mTP" customClass="EmojiCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                        <rect key="frame" x="140" y="10" width="60" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHt-tw-fu3">
+                                                    <rect key="frame" x="3" y="-6" width="54" height="72"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                    <state key="normal" title="➕"/>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="yHt-tw-fu3" firstAttribute="centerY" secondItem="OeX-Dx-mTP" secondAttribute="centerY" id="OrY-RW-0Ph"/>
+                                            <constraint firstItem="yHt-tw-fu3" firstAttribute="centerX" secondItem="OeX-Dx-mTP" secondAttribute="centerX" id="ciT-wU-VU0"/>
+                                        </constraints>
+                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JnH-Yy-lvd">
