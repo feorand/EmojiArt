@@ -117,7 +117,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </view>

@@ -8,7 +8,23 @@
 
 import UIKit
 
-class InputItemsCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var textField: UITextField!
+class InputItemsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate
+{
+    var inputEndHandler: (()->Void)?
+    
+    @IBOutlet weak var textField: UITextField! {
+        didSet {
+            textField.delegate = self
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        inputEndHandler?()
+    }
+    
 }
