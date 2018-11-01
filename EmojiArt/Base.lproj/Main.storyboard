@@ -114,7 +114,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AIJ-MV-bjr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                    <rect key="frame" x="0.0" y="-2" width="60" height="64"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                                     <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
@@ -124,8 +124,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="AIJ-MV-bjr" secondAttribute="trailing" id="2hT-iY-yu8"/>
                                             <constraint firstItem="AIJ-MV-bjr" firstAttribute="leading" secondItem="J4Q-L7-a58" secondAttribute="leading" id="E2u-AC-sWt"/>
-                                            <constraint firstAttribute="bottom" secondItem="AIJ-MV-bjr" secondAttribute="bottom" id="ViA-Gr-9fz"/>
-                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="top" secondItem="J4Q-L7-a58" secondAttribute="top" id="xhM-mV-ZeJ"/>
+                                            <constraint firstItem="AIJ-MV-bjr" firstAttribute="centerY" secondItem="J4Q-L7-a58" secondAttribute="centerY" id="aXH-8u-e7p"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="textField" destination="AIJ-MV-bjr" id="9KW-B6-4nd"/>

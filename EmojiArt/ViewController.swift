@@ -61,7 +61,7 @@ class ViewController: UIViewController
     
     @IBAction func addCellButtonClicked() {
         isAdding = true
-        collectionView.reloadData()
+        collectionView.reloadSections([0])
     }
     
     private func setImageFromNetAsync(imageURL: URL?) {
@@ -103,16 +103,14 @@ extension ViewController: UIDropInteractionDelegate
                     self?.image = image
                 }
             }
-        } else {
-            if let emoji = session.items.first?.localObject as? NSAttributedString {
-                let position = session.location(in: self.backgroundView)
-                let emojiView = UILabel()
-                emojiView.attributedText = emoji
-                emojiView.backgroundColor = .clear
-                emojiView.sizeToFit()
-                emojiView.center = position
-                backgroundView.addSubview(emojiView)
-            }
+        } else if let emoji = session.items.first?.localObject as? NSAttributedString {
+            let position = session.location(in: self.backgroundView)
+            let emojiView = UILabel()
+            emojiView.attributedText = emoji
+            emojiView.backgroundColor = .clear
+            emojiView.sizeToFit()
+            emojiView.center = position
+            backgroundView.addSubview(emojiView)
         }
     }
 }
@@ -124,19 +122,16 @@ extension ViewController: UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return emojis.count
+        switch section {
+        case 0: return 1
+        default: return emojis.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell:UICollectionViewCell!
-        
         if indexPath.section == 0 {
             if isAdding {
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputItemsCell", for: indexPath)
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputItemsCell", for: indexPath)
                 if let cell = cell as? InputItemsCollectionViewCell {
                     cell.inputEndHandler = { [weak self, unowned cell] in
                         self?.emojis = cell.textField.text!.map{ String($0) } + self!.emojis
@@ -144,32 +139,36 @@ extension ViewController: UICollectionViewDataSource
                         cell.textField.text = ""
                         self?.isAdding = false
                     }
-                    
-                    cell.textField.becomeFirstResponder()
                 }
+                return cell
             } else {
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddItemsCell", for: indexPath)
-            }
-        } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
-            if let cell = cell as? EmojiCollectionViewCell {
-                cell.label.text = emojis[indexPath.item]
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "AddItemsCell", for: indexPath)
             }
         }
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+        if let cell = cell as? EmojiCollectionViewCell {
+            cell.label.text = emojis[indexPath.item]
+        }
         return cell
     }
 }
 
-extension ViewController: UICollectionViewDelegate { }
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? InputItemsCollectionViewCell {
+            cell.textField.becomeFirstResponder()
+        }
+    }
+}
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0, isAdding {
+        if indexPath.section == 0 && isAdding {
             return CGSize(width: 200, height: 60)
-        } else {
-            return CGSize(width: 60, height: 60)
         }
+        
+        return CGSize(width: 60, height: 60)
     }
 }
 
@@ -180,6 +179,7 @@ extension ViewController: UICollectionViewDragDelegate
         if indexPath.section == 0 {
             return []
         }
+        
         let cell = collectionView.cellForItem(at: indexPath) as! EmojiCollectionViewCell
         let emoji = cell.label.attributedText!
         let itemProvider = NSItemProvider(object: emoji)
