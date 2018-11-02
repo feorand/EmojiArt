@@ -55,7 +55,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             scrollView?.contentSize = size
         }
     }
-        
+    
+    //MARK:- Drop
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSURL.self) &&
             session.canLoadObjects(ofClass: UIImage.self) ||

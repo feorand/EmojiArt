@@ -10,9 +10,9 @@ import UIKit
 
 class DynamicCollectionViewController: UIViewController, UICollectionViewDragDelegate, UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource
 {
-    var source = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
-    var isAdding = false
-
+    
+    //MARK:- Outlets
+    
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.delegate = self
@@ -26,7 +26,15 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
         isAdding = true
         collectionView.reloadSections([0])
     }
+    
+    //MARK:- Properties
+    
+    var source = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
+    
+    var isAdding = false
 
+    //MARK:- Data Source
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
@@ -69,6 +77,8 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
         }
     }
 
+    //MARK:- Flow Layout
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 && isAdding {
             return CGSize(width: 200, height: 60)
@@ -76,6 +86,8 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
         
         return CGSize(width: 60, height: 60)
     }
+    
+    //MARK:- Drag
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         
@@ -92,6 +104,8 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
         return [dragItem]
     }
 
+    //MARK:- Drop
+    
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSAttributedString.self)
     }
