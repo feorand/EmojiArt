@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController
+class ViewController: UIViewController, UIScrollViewDelegate
 {
     var emojis = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
     var isAdding = false
@@ -28,25 +28,30 @@ class ViewController: UIViewController
             scrollView.addSubview(backgroundView)
         }
     }
+    
     @IBOutlet weak var scrollWidthConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var scrollHeightConstraint: NSLayoutConstraint!
     
     var backgroundView = BackgroundView()
+    
     var image: UIImage? {
         get {
             return backgroundView.image
         }
         
         set {
-            scrollView?.zoomScale = 1.0
-            backgroundView.image = newValue
             let size = newValue?.size ?? CGSize.zero
+
             backgroundView.frame = CGRect(origin: CGPoint.zero, size: size)
-            scrollView?.contentSize = size
+            backgroundView.image = newValue
             
             if let dropView = dropView, size.width > 0, size.height > 0 {
                 scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+            } else {
+                scrollView?.zoomScale = 1.0
             }
+            scrollView?.contentSize = size
         }
     }
     
@@ -133,7 +138,7 @@ extension ViewController: UICollectionViewDataSource
             if isAdding {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputItemsCell", for: indexPath)
                 if let cell = cell as? InputItemsCollectionViewCell {
-                    cell.inputEndHandler = { [weak self, unowned cell] in
+                    cell.textFieldDidEndEditingHandler = { [weak self, unowned cell] in
                         self?.emojis = cell.textField.text!.map{ String($0) } + self!.emojis
                         collectionView.reloadData()
                         cell.textField.text = ""
@@ -237,15 +242,18 @@ extension ViewController: UICollectionViewDropDelegate
             }
         }
     }
-}
 
-extension ViewController: UIScrollViewDelegate
-{
+    // MARK: - Scrolling
+
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return backgroundView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        // Updating fixed width and height constraints to match new content size
+        // Fixed size constraints have lower priority than centering constrains
+        // and constraints that keep view inside edges
+        // This is done in order to support both large (zoom) and small (center) images
         scrollWidthConstraint.constant = scrollView.contentSize.width
         scrollHeightConstraint.constant = scrollView.contentSize.height
     }
