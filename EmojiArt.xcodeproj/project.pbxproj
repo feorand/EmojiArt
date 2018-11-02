@@ -14,8 +14,9 @@
 		7A4EC2B92040356900BBA338 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A4EC2B72040356900BBA338 /* LaunchScreen.storyboard */; };
 		7A4EC2C220403C4300BBA338 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4EC2C120403C4300BBA338 /* BackgroundView.swift */; };
 		7A4EC2C420404ABF00BBA338 /* EmojiDocumentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4EC2C320404ABF00BBA338 /* EmojiDocumentsTableViewController.swift */; };
-		7A4EC2C82043EDF200BBA338 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4EC2C72043EDF200BBA338 /* EmojiCollectionViewCell.swift */; };
+		7A4EC2C82043EDF200BBA338 /* DynamicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4EC2C72043EDF200BBA338 /* DynamicCollectionViewCell.swift */; };
 		7ABEA0D02068DEDC009BD95C /* InputItemsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEA0CF2068DEDC009BD95C /* InputItemsCollectionViewCell.swift */; };
+		7AEF0A29218C3914003D0869 /* DynamicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEF0A28218C3914003D0869 /* DynamicCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +29,9 @@
 		7A4EC2BA2040356900BBA338 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A4EC2C120403C4300BBA338 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		7A4EC2C320404ABF00BBA338 /* EmojiDocumentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDocumentsTableViewController.swift; sourceTree = "<group>"; };
-		7A4EC2C72043EDF200BBA338 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
+		7A4EC2C72043EDF200BBA338 /* DynamicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewCell.swift; sourceTree = "<group>"; };
 		7ABEA0CF2068DEDC009BD95C /* InputItemsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItemsCollectionViewCell.swift; sourceTree = "<group>"; };
+		7AEF0A28218C3914003D0869 /* DynamicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +67,8 @@
 				7A4EC2B22040356900BBA338 /* Main.storyboard */,
 				7ABEA0CF2068DEDC009BD95C /* InputItemsCollectionViewCell.swift */,
 				7A4EC2B02040356900BBA338 /* ViewController.swift */,
-				7A4EC2C72043EDF200BBA338 /* EmojiCollectionViewCell.swift */,
+				7AEF0A28218C3914003D0869 /* DynamicCollectionViewController.swift */,
+				7A4EC2C72043EDF200BBA338 /* DynamicCollectionViewCell.swift */,
 				7A4EC2C320404ABF00BBA338 /* EmojiDocumentsTableViewController.swift */,
 				7A4EC2C120403C4300BBA338 /* BackgroundView.swift */,
 				7A4EC2BA2040356900BBA338 /* Info.plist */,
@@ -158,9 +161,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A4EC2C220403C4300BBA338 /* BackgroundView.swift in Sources */,
-				7A4EC2C82043EDF200BBA338 /* EmojiCollectionViewCell.swift in Sources */,
+				7A4EC2C82043EDF200BBA338 /* DynamicCollectionViewCell.swift in Sources */,
 				7ABEA0D02068DEDC009BD95C /* InputItemsCollectionViewCell.swift in Sources */,
 				7A4EC2B12040356900BBA338 /* ViewController.swift in Sources */,
+				7AEF0A29218C3914003D0869 /* DynamicCollectionViewController.swift in Sources */,
 				7A4EC2AF2040356900BBA338 /* AppDelegate.swift in Sources */,
 				7A4EC2C420404ABF00BBA338 /* EmojiDocumentsTableViewController.swift in Sources */,
 			);
