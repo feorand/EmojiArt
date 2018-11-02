@@ -28,7 +28,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItemCell" id="hSE-wK-G04" customClass="DynamicCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItemCell" id="hSE-wK-G04" customClass="DynamicCollectionViewItemCell" customModule="EmojiArt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -90,7 +90,7 @@
                                             <constraint firstItem="h0Q-oA-rlP" firstAttribute="centerY" secondItem="Wc6-vi-cST" secondAttribute="centerY" id="QvA-mh-Kpo"/>
                                         </constraints>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InputCell" id="7Vn-cO-YtC" customClass="InputItemsCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InputCell" id="7Vn-cO-YtC" customClass="DynamicCollectionViewInputCell" customModule="EmojiArt" customModuleProvider="target">
                                         <rect key="frame" x="210" y="10" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">

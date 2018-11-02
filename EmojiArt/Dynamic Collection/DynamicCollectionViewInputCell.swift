@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InputItemsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate
+class DynamicCollectionViewInputCell: UICollectionViewCell, UITextFieldDelegate
 {
     var textFieldDidEndEditingHandler: (()->Void)?
     

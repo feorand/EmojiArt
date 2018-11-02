@@ -8,11 +8,11 @@
 
 import UIKit
 
-class BackgroundView: UIView
+class CompositeImageView: UIView
 {
-    var image: UIImage? { didSet{ setNeedsDisplay() } }
+    var background: UIImage? { didSet { setNeedsDisplay() } }
     
     override func draw(_ rect: CGRect) {
-        image?.draw(in: bounds)
+        background?.draw(in: bounds)
     }
 }

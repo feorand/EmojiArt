@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DynamicCollectionViewCell: UICollectionViewCell
+class DynamicCollectionViewItemCell: UICollectionViewCell
 {
     @IBOutlet weak var label: UILabel!
 }

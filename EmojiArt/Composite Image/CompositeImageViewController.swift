@@ -34,18 +34,18 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     //MARK:- Properties
     
-    var backgroundView = BackgroundView()
+    var backgroundView = CompositeImageView()
     
     var image: UIImage? {
         get {
-            return backgroundView.image
+            return backgroundView.background
         }
         
         set {
             let size = newValue?.size ?? CGSize.zero
             
             backgroundView.frame = CGRect(origin: CGPoint.zero, size: size)
-            backgroundView.image = newValue
+            backgroundView.background = newValue
             
             if let dropView = dropView, size.width > 0, size.height > 0 {
                 scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)

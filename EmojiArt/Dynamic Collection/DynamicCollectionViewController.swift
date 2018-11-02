@@ -42,7 +42,7 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
         if indexPath.section == 0 {
             if isAdding {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputCell", for: indexPath)
-                if let cell = cell as? InputItemsCollectionViewCell {
+                if let cell = cell as? DynamicCollectionViewInputCell {
                     cell.textFieldDidEndEditingHandler = { [weak self, unowned cell] in
                         self?.source = cell.textField.text!.map{ String($0) } + self!.source
                         collectionView.reloadData()
@@ -57,14 +57,14 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
         }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath)
-        if let cell = cell as? DynamicCollectionViewCell {
+        if let cell = cell as? DynamicCollectionViewItemCell {
             cell.label.text = source[indexPath.item]
         }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? InputItemsCollectionViewCell {
+        if let cell = cell as? DynamicCollectionViewInputCell {
             cell.textField.becomeFirstResponder()
         }
     }
@@ -83,7 +83,7 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
             return []
         }
         
-        let cell = collectionView.cellForItem(at: indexPath) as! DynamicCollectionViewCell
+        let cell = collectionView.cellForItem(at: indexPath) as! DynamicCollectionViewItemCell
         let item = cell.label.attributedText!
         let itemProvider = NSItemProvider(object: item)
         let dragItem = UIDragItem(itemProvider: itemProvider)
