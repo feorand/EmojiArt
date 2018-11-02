@@ -17,6 +17,7 @@
 		7ABEA0D02068DEDC009BD95C /* DynamicCollectionViewInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEA0CF2068DEDC009BD95C /* DynamicCollectionViewInputCell.swift */; };
 		7AEF0A29218C3914003D0869 /* DynamicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEF0A28218C3914003D0869 /* DynamicCollectionViewController.swift */; };
 		7AEF0A2C218C6F49003D0869 /* CompositeImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEF0A2A218C6F49003D0869 /* CompositeImageViewController.swift */; };
+		7AEF0A33218C7D79003D0869 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEF0A32218C7D79003D0869 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		7ABEA0CF2068DEDC009BD95C /* DynamicCollectionViewInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewInputCell.swift; sourceTree = "<group>"; };
 		7AEF0A28218C3914003D0869 /* DynamicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewController.swift; sourceTree = "<group>"; };
 		7AEF0A2A218C6F49003D0869 /* CompositeImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeImageViewController.swift; sourceTree = "<group>"; };
+		7AEF0A32218C7D79003D0869 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				7A4EC2B02040356900BBA338 /* EmojiArtViewController.swift */,
 				7AEF0A30218C7A62003D0869 /* Composite Image */,
 				7AEF0A31218C7A86003D0869 /* Dynamic Collection */,
+				7AEF0A32218C7D79003D0869 /* Settings.swift */,
 				7A4EC2BA2040356900BBA338 /* Info.plist */,
 				7A4EC2C0204035FA00BBA338 /* Support Files */,
 			);
@@ -178,6 +181,7 @@
 			files = (
 				7A4EC2C220403C4300BBA338 /* CompositeImageView.swift in Sources */,
 				7A4EC2C82043EDF200BBA338 /* DynamicCollectionViewItemCell.swift in Sources */,
+				7AEF0A33218C7D79003D0869 /* Settings.swift in Sources */,
 				7AEF0A2C218C6F49003D0869 /* CompositeImageViewController.swift in Sources */,
 				7ABEA0D02068DEDC009BD95C /* DynamicCollectionViewInputCell.swift in Sources */,
 				7A4EC2B12040356900BBA338 /* EmojiArtViewController.swift in Sources */,
