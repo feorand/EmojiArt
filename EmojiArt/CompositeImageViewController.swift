@@ -119,5 +119,4 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             }
         }
     }
-    
 }
