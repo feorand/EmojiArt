@@ -11,12 +11,19 @@ import UIKit
 class EmojiArtViewController: UIViewController
 {
     var emojiCollectionViewController: DynamicCollectionViewController!
+    
+    var dropZoneViewController: CompositeImageViewController!
         
     override func viewDidLoad() {
         guard let firstChild = children.first as? DynamicCollectionViewController else {
-            fatalError("StoryBoard - missing connection to DynamicCollectionVC")
+            fatalError("Storyboard - missing connection to DynamicCollectionVC")
+        }
+        
+        guard let secondChild = children.last as? CompositeImageViewController else {
+            fatalError("Storyboard - missing connection to CompositeImageVC")
         }
         
         emojiCollectionViewController = firstChild
+        dropZoneViewController = secondChild
     }
 }
