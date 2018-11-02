@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="Ydb-tA-FEj" customClass="DynamicCollectionViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RSy-AH-2or">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O7o-3c-HF0">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3Q1-4k-DJg">
                                     <size key="itemSize" width="60" height="60"/>
@@ -134,10 +134,10 @@
             </objects>
             <point key="canvasLocation" x="1469" y="-292"/>
         </scene>
-        <!--View Controller-->
+        <!--Emoji Art View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="EmojiArtViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -212,6 +212,7 @@
                             <constraint firstItem="Ete-97-SD0" firstAttribute="top" secondItem="YVh-QZ-lvR" secondAttribute="top" id="gpy-Jp-V5y"/>
                             <constraint firstItem="Ete-97-SD0" firstAttribute="leading" secondItem="YVh-QZ-lvR" secondAttribute="leading" id="xyP-1h-6Lc"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="6n1-9p-dce"/>
                     </view>
                     <connections>
                         <outlet property="dropView" destination="Ete-97-SD0" id="abV-Dr-NGD"/>

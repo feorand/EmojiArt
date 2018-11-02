@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController
+class EmojiArtViewController: UIViewController
 {
     var emojiCollectionViewController: DynamicCollectionViewController!
         
