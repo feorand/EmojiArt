@@ -26,7 +26,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             scrollView.maximumZoomScale = ImageScrollSettings.maxZoom
             scrollView.minimumZoomScale = ImageScrollSettings.minZoom
             scrollView.delegate = self
-            scrollView.addSubview(backgroundView)
+            scrollView.addSubview(resultView)
         }
     }
     
@@ -36,18 +36,18 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     //MARK:- Properties
     
-    var backgroundView = CompositeImageView()
+    var resultView = CompositeImageView()
     
     var image: UIImage? {
         get {
-            return backgroundView.background
+            return resultView.background
         }
         
         set {
             if let newValue = newValue {
                 let size = newValue.size
                 
-                backgroundView.changeBackgroundImage(to: newValue)
+                resultView.changeBackgroundImage(to: newValue)
                 
                 if let dropView = dropView, size.width > 0, size.height > 0 {
                     scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
@@ -90,8 +90,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             }
             
         } else if let emoji = session.items.first?.localObject as? NSAttributedString {
-            let position = session.location(in: self.backgroundView)
-            backgroundView.addSymbol(emoji, position: position)
+            let position = session.location(in: self.resultView)
+            resultView.addSymbol(emoji, position: position)
         } else {
             print("Unknown object dropped")
         }
@@ -100,7 +100,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     // MARK:- Scrolling
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return backgroundView
+        return resultView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
