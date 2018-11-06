@@ -8,11 +8,11 @@
 
 import UIKit
 
-class EmojiArtViewController: UIViewController
+class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate
 {
     var emojiCollectionViewController: DynamicCollectionViewController!
     
-    var dropZoneViewController: CompositeImageViewController!
+    var resultImageViewController: CompositeImageViewController!
         
     override func viewDidLoad() {
         guard let firstChild = children.first as? DynamicCollectionViewController else {
@@ -24,6 +24,25 @@ class EmojiArtViewController: UIViewController
         }
         
         emojiCollectionViewController = firstChild
-        dropZoneViewController = secondChild
+        resultImageViewController = secondChild
+        
+        resultImageViewController.delegate = self
+    }
+    
+    //MARK:- CompositeImageViewControllerDelegate methods
+    
+    func compositeImageVCDidChangeBackground(
+        _ controller: CompositeImageViewController,
+        to image: UIImage?) {
+        
+        print("New image load")
+    }
+    
+    func compositeImageVCDidAddSymbol(
+        _ controller: CompositeImageViewController,
+        _ symbol: NSAttributedString,
+        position: CGPoint) {
+        
+        print("Added emoji \(symbol.string)")
     }
 }

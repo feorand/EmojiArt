@@ -9,6 +9,32 @@
 import UIKit
 
 protocol CompositeImageViewControllerDelegate {
-    func backgroundImageChanged(to image: UIImage?)
-    func addedSymbol(_ symbol: NSAttributedString, position: CGPoint)
+    
+    func compositeImageVCDidChangeBackground(
+        _ controller: CompositeImageViewController,
+        to image: UIImage?
+    )
+    
+    func compositeImageVCDidAddSymbol(
+        _ controller: CompositeImageViewController,
+        _ symbol: NSAttributedString,
+        position: CGPoint)
+}
+
+extension CompositeImageViewControllerDelegate {
+    
+    func compositeImageVCDidChangeBackground(
+        _ controller: CompositeImageViewController,
+        to image: UIImage?) {
+        
+        // Optional method
+    }
+    
+    func compositeImageVCDidAddSymbol(
+        _ controller: CompositeImageViewController,
+        _ symbol: NSAttributedString,
+        position: CGPoint) {
+        
+        // Optional method
+    }
 }

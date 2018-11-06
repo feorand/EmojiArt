@@ -61,7 +61,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                 dropImageHereLabel.isHidden = true
                 dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                 
-                delegate?.backgroundImageChanged(to: newValue)
+                delegate?.compositeImageVCDidChangeBackground(self, to: newValue)
             }
         }
     }
@@ -96,7 +96,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         } else if let symbol = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.resultView)
             resultView.addSymbol(symbol, position: position)
-            delegate?.addedSymbol(symbol, position: position)
+            delegate?.compositeImageVCDidAddSymbol(self, symbol, position: position)
         } else {
             print("Unknown object dropped")
         }
