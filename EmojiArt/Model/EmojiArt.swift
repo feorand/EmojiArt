@@ -1,5 +1,5 @@
 //
-//  EmojiArtImage.swift
+//  EmojiArt.swift
 //  EmojiArt
 //
 //  Created by Pavel Prokofyev on 06/11/2018.
@@ -8,7 +8,6 @@
 
 import Foundation
 
-class EmojiArtImage: Codable {
-    var emoji: [EmojiInfo] = []
-    var backgroundImageData: Data? = nil
+class EmojiArt: Codable {
+    var image = EmojiArtImage()
 }
