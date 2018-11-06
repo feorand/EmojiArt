@@ -19,6 +19,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         }
     }
     
+    @IBOutlet weak var dropImageHereLabel: UILabel!
+    
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.maximumZoomScale = ImageScrollSettings.maxZoom
@@ -42,17 +44,21 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         }
         
         set {
-            let size = newValue?.size ?? CGSize.zero
-            
-            backgroundView.frame = CGRect(origin: CGPoint.zero, size: size)
-            backgroundView.background = newValue
-            
-            if let dropView = dropView, size.width > 0, size.height > 0 {
-                scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
-            } else {
-                scrollView?.zoomScale = 1.0
+            if let newValue = newValue {
+                let size = newValue.size
+                
+                backgroundView.changeBackgroundImage(to: newValue)
+                
+                if let dropView = dropView, size.width > 0, size.height > 0 {
+                    scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+                } else {
+                    scrollView.zoomScale = 1.0
+                }
+                scrollView.contentSize = size
+                
+                dropImageHereLabel.isHidden = true
+                dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             }
-            scrollView?.contentSize = size
         }
     }
     
@@ -69,25 +75,25 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         if session.localDragSession?.localContext as? UICollectionView == nil {
+            // First load a miniature of an image so user has something to see
+            session.loadObjects(ofClass: UIImage.self) { [weak self] images in
+                if let imageItem = images.first, let image = imageItem as? UIImage {
+                    self?.image = image
+                }
+            }
+
+            // Then load a full image from net (may be slow)
             session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
                 if let urlItem = urls.first, let url = urlItem as? URL {
                     self?.setImageFromNetAsync(imageURL: url)
                 }
             }
             
-            session.loadObjects(ofClass: UIImage.self) { [weak self] images in
-                if let imageItem = images.first, let image = imageItem as? UIImage {
-                    self?.image = image
-                }
-            }
         } else if let emoji = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.backgroundView)
-            let emojiView = UILabel()
-            emojiView.attributedText = emoji
-            emojiView.backgroundColor = .clear
-            emojiView.sizeToFit()
-            emojiView.center = position
-            backgroundView.addSubview(emojiView)
+            backgroundView.addSymbol(emoji, position: position)
+        } else {
+            print("Unknown object dropped")
         }
     }
     
@@ -100,7 +106,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         // Updating fixed width and height constraints to match new content size
         // Fixed size constraints have lower priority than centering constrains
-        // and constraints that keep view inside edges
+        // and constraints that keep view inside bounds
         // This is done in order to support both large (zoom) and small (center) images
         scrollWidthConstraint.constant = scrollView.contentSize.width
         scrollHeightConstraint.constant = scrollView.contentSize.height

@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="Ydb-tA-FEj" customClass="DynamicCollectionViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RSy-AH-2or">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="80"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O7o-3c-HF0">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3Q1-4k-DJg">
                                     <size key="itemSize" width="60" height="60"/>
@@ -186,6 +186,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ete-97-SD0" userLabel="Drop Zone">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="668"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drop Image here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9KU-Z3-AWH">
+                                        <rect key="frame" x="347.5" y="306" width="329.5" height="56.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" placeholderIntrinsicWidth="1024" placeholderIntrinsicHeight="668" translatesAutoresizingMaskIntoConstraints="NO" id="EEs-o6-qQk">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="668"/>
                                         <constraints>
@@ -194,13 +200,15 @@
                                         </constraints>
                                     </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="9KU-Z3-AWH" firstAttribute="centerX" secondItem="Ete-97-SD0" secondAttribute="centerX" id="9ka-ts-gZt"/>
                                     <constraint firstItem="EEs-o6-qQk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ete-97-SD0" secondAttribute="leading" id="Pe6-p1-V4S"/>
                                     <constraint firstItem="EEs-o6-qQk" firstAttribute="centerY" secondItem="Ete-97-SD0" secondAttribute="centerY" id="R8Z-SH-XHH"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EEs-o6-qQk" secondAttribute="trailing" id="Xl3-NM-MNk"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EEs-o6-qQk" secondAttribute="bottom" id="YNy-U7-Isg"/>
                                     <constraint firstItem="EEs-o6-qQk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ete-97-SD0" secondAttribute="top" id="gc6-QX-Xeg"/>
+                                    <constraint firstItem="9KU-Z3-AWH" firstAttribute="centerY" secondItem="Ete-97-SD0" secondAttribute="centerY" id="kDT-ow-7Mn"/>
                                     <constraint firstItem="EEs-o6-qQk" firstAttribute="centerX" secondItem="Ete-97-SD0" secondAttribute="centerX" id="tKa-OW-zac"/>
                                 </constraints>
                             </view>
@@ -215,6 +223,7 @@
                         <viewLayoutGuide key="safeArea" id="6n1-9p-dce"/>
                     </view>
                     <connections>
+                        <outlet property="dropImageHereLabel" destination="9KU-Z3-AWH" id="X6Y-4F-EZt"/>
                         <outlet property="dropView" destination="Ete-97-SD0" id="abV-Dr-NGD"/>
                         <outlet property="scrollHeightConstraint" destination="Bd5-lD-2zm" id="vsc-46-4Gi"/>
                         <outlet property="scrollView" destination="EEs-o6-qQk" id="A22-Cg-ksj"/>
