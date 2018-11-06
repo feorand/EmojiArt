@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Type for storing data of a particular Emoji symbol
 struct EmojiInfo: Codable {
     var x: Float
     var y: Float

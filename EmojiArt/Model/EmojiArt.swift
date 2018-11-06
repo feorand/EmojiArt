@@ -8,6 +8,8 @@
 
 import Foundation
 
+// Type for storing all data of app's state
+// Currently it's an emoji image and a list of available emoji
 class EmojiArt: Codable {
     var image = EmojiArtImage()
 }

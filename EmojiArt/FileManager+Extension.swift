@@ -9,6 +9,7 @@
 import Foundation
 
 extension FileManager {
+    //Returns Url of Documents directory (for convenience)
     static func DocumentsUrl() -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
