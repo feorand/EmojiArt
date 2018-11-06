@@ -14,41 +14,27 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var emojiSource = EmojiArt()
     
-    var emojiCollectionViewController: DynamicCollectionViewController!
-    
-    var resultImageViewController: CompositeImageViewController!
-    
     //MARK:- ViewController life cycle
     
     override func viewDidLoad() {
-        guard let firstChild = children.first as? DynamicCollectionViewController else {
-            fatalError("Storyboard - missing connection to DynamicCollectionVC")
-        }
+//        guard let emojiCollectionVC = children.first as? DynamicCollectionViewController else {
+//            fatalError("Storyboard - missing connection to DynamicCollectionVC")
+//        }
         
-        guard let secondChild = children.last as? CompositeImageViewController else {
+        guard let emojiImageVC = children.last as? CompositeImageViewController else {
             fatalError("Storyboard - missing connection to CompositeImageVC")
         }
         
-        emojiCollectionViewController = firstChild
-        resultImageViewController = secondChild
-        
-        resultImageViewController.delegate = self
+        emojiImageVC.delegate = self
     }
     
     //MARK:- CompositeImageViewControllerDelegate methods
     
-    func compositeImageVCDidChangeBackground(
-        _ controller: CompositeImageViewController,
-        to image: UIImage?) {
-
+    func compositeImageVCDidChangeBackground(to image: UIImage?) {
         emojiSource.image.backgroundImageData = image?.pngData()
     }
     
-    func compositeImageVCDidAddSymbol(
-        _ controller: CompositeImageViewController,
-        _ symbol: NSAttributedString,
-        position: CGPoint) {
-
+    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
         let emojiInfo = EmojiInfo(
             x: Float(position.x),
             y: Float(position.y),

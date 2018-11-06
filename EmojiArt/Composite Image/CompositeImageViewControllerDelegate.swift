@@ -10,31 +10,18 @@ import UIKit
 
 protocol CompositeImageViewControllerDelegate {
     
-    func compositeImageVCDidChangeBackground(
-        _ controller: CompositeImageViewController,
-        to image: UIImage?
-    )
+    func compositeImageVCDidChangeBackground(to image: UIImage?)
     
-    func compositeImageVCDidAddSymbol(
-        _ controller: CompositeImageViewController,
-        _ symbol: NSAttributedString,
-        position: CGPoint)
+    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint)
 }
 
 extension CompositeImageViewControllerDelegate {
     
-    func compositeImageVCDidChangeBackground(
-        _ controller: CompositeImageViewController,
-        to image: UIImage?) {
-        
+    func compositeImageVCDidChangeBackground(to image: UIImage?) {
         // Optional method
     }
     
-    func compositeImageVCDidAddSymbol(
-        _ controller: CompositeImageViewController,
-        _ symbol: NSAttributedString,
-        position: CGPoint) {
-        
+    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
         // Optional method
     }
 }
