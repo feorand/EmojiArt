@@ -8,9 +8,9 @@
 
 import UIKit
 
-class InputItemsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate
+class DynamicCollectionViewInputCell: UICollectionViewCell, UITextFieldDelegate
 {
-    var inputEndHandler: (()->Void)?
+    var textFieldDidEndEditingHandler: (()->Void)?
     
     @IBOutlet weak var textField: UITextField! {
         didSet {
@@ -24,7 +24,6 @@ class InputItemsCollectionViewCell: UICollectionViewCell, UITextFieldDelegate
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        inputEndHandler?()
+        textFieldDidEndEditingHandler?()
     }
-    
 }
