@@ -14,16 +14,32 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var emojiSource = EmojiArt()
     
-    var document: EmojiArtDocument!
+    var document: EmojiArtDocument?
+    
+    var emojiImageVC: CompositeImageViewController!
     
     //MARK:- ViewController life cycle
     
     override func viewDidLoad() {
-        guard let emojiImageVC = children.last as? CompositeImageViewController else {
+        super.viewDidLoad()
+        
+        guard let secondChild = children.last as? CompositeImageViewController else {
             fatalError("Storyboard - missing connection to CompositeImageVC")
         }
         
+        emojiImageVC = secondChild
         emojiImageVC.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        document?.open() {success in
+            if success {
+                self.title = self.document?.localizedName
+                self.emojiImageVC.image = UIImage(data: self.document?.emojiArt?.image.backgroundImageData ?? Data())
+            }
+        }
     }
     
     //MARK:- Actions

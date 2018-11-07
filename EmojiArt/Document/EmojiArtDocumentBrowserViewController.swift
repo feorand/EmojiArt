@@ -42,6 +42,11 @@ class EmojiArtDocumentBrowserViewController: UIDocumentBrowserViewController, UI
         presentEmojiArtVC(withDocumentURL: documentURLs.first!)
     }
     
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, didImportDocumentAt sourceURL: URL, toDestinationURL destinationURL: URL) {
+        
+        presentEmojiArtVC(withDocumentURL: destinationURL)
+    }
+    
     //MARK:- Utilities
     
     private func presentEmojiArtVC(withDocumentURL url: URL) {
