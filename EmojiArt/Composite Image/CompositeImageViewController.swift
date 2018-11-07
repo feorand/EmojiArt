@@ -12,8 +12,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
 {
     //MARK:- TEST
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
