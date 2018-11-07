@@ -10,6 +10,17 @@ import UIKit
 
 class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDropInteractionDelegate
 {
+    //MARK:- TEST
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
+        
+        image = #imageLiteral(resourceName: "background.jpeg")
+    }
+    
     // MARK:- Outlets
     
     @IBOutlet weak var dropView: UIView! {
@@ -46,23 +57,25 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         }
         
         set {
-            if let newValue = newValue {
-                let size = newValue.size
-                
-                resultView.changeBackgroundImage(to: newValue)
-                
-                if let dropView = dropView, size.width > 0, size.height > 0 {
-                    scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
-                } else {
-                    scrollView.zoomScale = 1.0
-                }
-                scrollView.contentSize = size
-                
-                dropImageHereLabel.isHidden = true
-                dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                
-                delegate?.compositeImageVCDidChangeBackground(to: newValue)
+            let size = newValue?.size ?? CGSize.zero
+            
+            resultView.changeBackgroundImage(to: newValue)
+            
+            if let dropView = dropView, size.width > 0, size.height > 0 {
+                scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+            } else {
+                scrollView.zoomScale = 1.0
             }
+            scrollView.contentSize = size
+            scrollHeightConstraint.constant = size.height
+            scrollWidthConstraint.constant = size.width
+            
+            dropImageHereLabel.isHidden = true
+            dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
+            //FIXME:- this is for testing only
+            // change to actual image url
+            delegate?.compositeImageVCDidChangeBackground(to: newValue)
         }
     }
     
