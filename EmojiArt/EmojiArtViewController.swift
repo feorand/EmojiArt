@@ -14,6 +14,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var emojiSource = EmojiArt()
     
+    var document: EmojiArtDocument!
+    
     //MARK:- ViewController life cycle
     
     override func viewDidLoad() {
@@ -38,6 +40,10 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         } catch {
             print("ERROR: Writing JSON to Documents, \(error)")
         }
+    }
+    
+    @IBAction func doneButtonPressed() {
+        dismiss(animated: true)
     }
     
     //MARK:- CompositeImageViewControllerDelegate methods
