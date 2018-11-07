@@ -73,8 +73,6 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             dropImageHereLabel.isHidden = true
             dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
-            //FIXME:- this is for testing only
-            // change to actual image url
             delegate?.compositeImageVCDidChangeBackground(to: newValue)
         }
     }
