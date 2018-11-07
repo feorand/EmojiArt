@@ -17,15 +17,27 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     //MARK:- ViewController life cycle
     
     override func viewDidLoad() {
-//        guard let emojiCollectionVC = children.first as? DynamicCollectionViewController else {
-//            fatalError("Storyboard - missing connection to DynamicCollectionVC")
-//        }
-        
         guard let emojiImageVC = children.last as? CompositeImageViewController else {
             fatalError("Storyboard - missing connection to CompositeImageVC")
         }
         
         emojiImageVC.delegate = self
+    }
+    
+    //MARK:- Actions
+    
+    @IBAction func saveButtonPressed() {
+        let emojiJson = emojiSource.json()
+        let documentsDitectoryUrl = FileManager.DocumentsUrl()
+        let destinationFileUrl = documentsDitectoryUrl
+            .appendingPathComponent("Untitled")
+            .appendingPathExtension("json")
+        
+        do {
+            try emojiJson.write(to: destinationFileUrl)
+        } catch {
+            print("ERROR: Writing JSON to Documents, \(error)")
+        }
     }
     
     //MARK:- CompositeImageViewControllerDelegate methods
