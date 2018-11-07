@@ -14,14 +14,3 @@ protocol CompositeImageViewControllerDelegate {
     
     func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint)
 }
-
-extension CompositeImageViewControllerDelegate {
-    
-    func compositeImageVCDidChangeBackground(to image: UIImage?) {
-        // Optional method
-    }
-    
-    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
-        // Optional method
-    }
-}
