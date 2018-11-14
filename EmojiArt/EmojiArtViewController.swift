@@ -14,47 +14,60 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var currentEmojiArt = EmojiArt() {
         didSet {
-            self.emojiImageVC.image = UIImage(fromOptionalData: self.document.emojiArt?.image.backgroundImageData)
+            possibleEmojiVC.source = currentEmojiArt.possibleEmoji
             
-            for emoji in self.document.emojiArt?.image.emoji ?? [] {
-                self.emojiImageVC.addSymbol(symbol: emoji.attributedString, inPosition: emoji.position)
+            emojiImageVC.image = UIImage(fromOptionalData: currentEmojiArt.image.backgroundImageData)
+            
+            for emoji in currentEmojiArt.image.emoji {
+                emojiImageVC.addSymbol(symbol: emoji.attributedString, inPosition: emoji.position)
             }
         }
     }
     
     var document: EmojiArtDocument!
     
-    var dynamicCollectionVC: DynamicCollectionViewController!
+    var possibleEmojiVC: DynamicCollectionViewController!
     
     var emojiImageVC: CompositeImageViewController!
     
     //MARK:- ViewController life cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if let firstChild = children.first as? DynamicCollectionViewController {
-            dynamicCollectionVC = firstChild
-        } else {
-            fatalError("Storyboard - missing connection to DynamicCollectionVC")
-        }
-        
-        if let secondChild = children.last as? CompositeImageViewController {
-            emojiImageVC = secondChild
-        } else {
-            fatalError("Storyboard - missing connection to CompositeImageVC")
-        }
-        
-        dynamicCollectionVC.delegate = self
-        emojiImageVC.delegate = self
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        document.open() {success in
+//            if success {
+//                self.title = self.document.localizedName
+//
+//                if let emojiArt = self.document.emojiArt {
+//                    self.currentEmojiArt = emojiArt
+//                }
+//            }
+//        }
+//    }
+    
+    override func loadView() {
+        super.loadView()
         
         document.open() {success in
             if success {
                 self.title = self.document.localizedName
-                
-                if let emojiArt = self.document.emojiArt {
-                    self.currentEmojiArt = emojiArt
-                }
+                self.currentEmojiArt = self.document.emojiArt
+            }
+        }
+
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SegueSettings.PresentDynamicCollection {
+            if let dynamicCollectionVC = segue.destination as? DynamicCollectionViewController {
+                possibleEmojiVC = dynamicCollectionVC
+                possibleEmojiVC.delegate = self
+            }
+        } else if segue.identifier == SegueSettings.PresentCompositeImage {
+            if let compositeImageVC = segue.destination as? CompositeImageViewController {
+                emojiImageVC = compositeImageVC
+                emojiImageVC.delegate = self
             }
         }
     }
@@ -64,20 +77,15 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     @IBAction func saveButtonPressed() {
         //TODO: change to using incremental auto-save
         document.emojiArt = currentEmojiArt
-        
-        if document.emojiArt != nil {
-            document.save(to: document.fileURL, for: .forOverwriting)
-        }
+        document.save(to: document.fileURL, for: .forOverwriting)
     }
     
     @IBAction func doneButtonPressed() {
         //TODO: change to using incremental auto-save
         document.emojiArt = currentEmojiArt
         
-        if document.emojiArt != nil {
-            document.save(to: document.fileURL, for: .forOverwriting) { [weak self] success in
-                self?.dismiss(animated: true)
-            }
+        document.save(to: document.fileURL, for: .forOverwriting) { [weak self] success in
+            self?.dismiss(animated: true)
         }
     }
     

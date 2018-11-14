@@ -12,7 +12,7 @@ class EmojiArtDocumentBrowserViewController: UIDocumentBrowserViewController, UI
     
     //MARK:- Properties
     
-    var template: URL?
+    var templateURL: URL!
     
     //MARK:- ViewController life cycle
     
@@ -23,18 +23,20 @@ class EmojiArtDocumentBrowserViewController: UIDocumentBrowserViewController, UI
         allowsDocumentCreation = true
         allowsPickingMultipleItems = false
         
-        template = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json")
+        templateURL = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json")
         
-        if let url = template {
-            FileManager.default.createFile(atPath: url.path, contents: Data(), attributes: nil)
-        }
+        let template = EmojiArtDocument(fileURL: templateURL)
+        template.emojiArt.possibleEmoji = EmojiSettings.DefaultEmoji
+        template.save(to: templateURL, for: .forOverwriting)
+
+        //FileManager.default.createFile(atPath: url.path, contents: Data(), attributes: nil)
     }
     
     //MARK:- UIDocumentBrowserVCDelegate
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
 
-        importHandler(template, .copy)
+        importHandler(templateURL, .copy)
     }
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL]) {

@@ -31,14 +31,14 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
     
     var delegate: DynamicCollectionViewControllerDelegate?
     
-    var source = EmojiSettings.DefaultEmoji {
+    var source: [String] = [] {
         didSet {
             delegate?.dynamicCollectionVCDidUpdateItems(source)
         }
     }
     
     var isAdding = false
-
+        
     //MARK:- Data Source
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

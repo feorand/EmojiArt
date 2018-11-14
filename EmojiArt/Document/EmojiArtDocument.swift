@@ -14,7 +14,7 @@ class EmojiArtDocument: UIDocument {
     //MARK:- Properties
     
     //Model for representing
-    var emojiArt: EmojiArt?
+    var emojiArt: EmojiArt = EmojiArt()
     
     var thumbnailImage: UIImage?
     
@@ -22,13 +22,13 @@ class EmojiArtDocument: UIDocument {
     
     //Saving model to a document
     override func contents(forType typeName: String) throws -> Any {
-        return emojiArt?.json() as Any
+        return emojiArt.json() as Any
     }
     
     //Loading model from a document
     override func load(fromContents contents: Any, ofType typeName: String?) throws {
         if let data = contents as? Data {
-            emojiArt = EmojiArt(fromJson: data)
+            emojiArt = EmojiArt(fromJson: data) ?? EmojiArt()
         }
     }
     

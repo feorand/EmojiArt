@@ -59,14 +59,14 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             resultView.changeBackgroundImage(to: newValue)
             
             if let dropView = dropView, size.width > 0, size.height > 0 {
-                scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+                scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
             } else {
-                scrollView.zoomScale = 1.0
+                scrollView?.zoomScale = 1.0
             }
-            scrollView.contentSize = size
+            scrollView?.contentSize = size
             
-            dropImageHereLabel.isHidden = true
-            dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            dropImageHereLabel?.isHidden = true
+            dropView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
             delegate?.compositeImageVCDidChangeBackground(to: newValue)
         }

@@ -17,3 +17,8 @@ struct ImageScrollSettings {
 struct EmojiSettings {
     static let DefaultEmoji = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0)}
 }
+
+struct SegueSettings {
+    static let PresentDynamicCollection = "presentDynamicCollection"
+    static let PresentCompositeImage = "presentCompositeImage"
+}
