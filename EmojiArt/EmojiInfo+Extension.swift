@@ -15,7 +15,7 @@ extension EmojiInfo {
         symbol = attrString.string
         
         let font = attrString.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
-        let uiSize = font?.pointSize ?? CGFloat(0.0)
+        let uiSize = font?.pointSize ?? UIFont.systemFontSize
         size = Float(uiSize)
     }
     
