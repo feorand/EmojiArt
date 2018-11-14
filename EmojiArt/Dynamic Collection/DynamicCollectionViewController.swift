@@ -29,7 +29,13 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
     
     //MARK:- Properties
     
-    var source = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
+    var delegate: DynamicCollectionViewControllerDelegate?
+    
+    var source = EmojiSettings.DefaultEmoji {
+        didSet {
+            delegate?.dynamicCollectionVCDidUpdateItems(source)
+        }
+    }
     
     var isAdding = false
 
