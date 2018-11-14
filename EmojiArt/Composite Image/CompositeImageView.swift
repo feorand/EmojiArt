@@ -13,12 +13,8 @@ class CompositeImageView: UIView
     private(set) var background: UIImage? { didSet { setNeedsDisplay() } }
     
     var symbols: [UILabel] {
-        get {
-            return _symbols
-        }
+        return subviews.compactMap {$0 as? UILabel}
     }
-    
-    private var _symbols: [UILabel] = [] { didSet { setNeedsLayout() }}
     
     func addSymbol(_ symbol: NSAttributedString, position: CGPoint) {
         let symbolLabel = UILabel()
@@ -27,7 +23,6 @@ class CompositeImageView: UIView
         symbolLabel.sizeToFit()
         symbolLabel.center = position
         addSubview(symbolLabel)
-        _symbols.append(symbolLabel)
     }
     
     func changeBackgroundImage(to image: UIImage?) {

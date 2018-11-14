@@ -40,6 +40,14 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     var resultView = CompositeImageView()
     
+    var compositeImage: (image: UIImage?, symbols: [UILabel]) {
+        return (image, symbols)
+    }
+    
+    var symbols: [UILabel] {
+        return resultView.symbols
+    }
+    
     var image: UIImage? {
         get {
             return resultView.background
@@ -56,14 +64,16 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                 scrollView.zoomScale = 1.0
             }
             scrollView.contentSize = size
-            //scrollHeightConstraint.constant = size.height
-            //scrollWidthConstraint.constant = size.width
             
             dropImageHereLabel.isHidden = true
             dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
             delegate?.compositeImageVCDidChangeBackground(to: newValue)
         }
+    }
+    
+    func addSymbol(symbol: NSAttributedString, inPosition position: CGPoint) {
+        resultView.addSymbol(symbol, position: position)
     }
     
     //MARK:- Drop
@@ -121,11 +131,11 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     private func setImageFromNetAsync(imageURL: URL?) {
         if let url = imageURL {
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let imageData = try? Data(contentsOf: url)
                 if let imageData = imageData, let image = UIImage(data: imageData) {
                     DispatchQueue.main.async {
-                        self.image = image
+                        self?.image = image
                     }
                 }
             }

@@ -26,4 +26,8 @@ extension EmojiInfo {
         
         return NSAttributedString(string: symbol, attributes: attributes)
     }
+    
+    var position: CGPoint {
+        return CGPoint(x: CGFloat(x), y: CGFloat(y))
+    }
 }
