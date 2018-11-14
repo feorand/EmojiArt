@@ -10,17 +10,6 @@ import UIKit
 
 class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDropInteractionDelegate
 {
-    //MARK:- TEST
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
-        
-        image = #imageLiteral(resourceName: "background.jpeg")
-    }
-    
     // MARK:- Outlets
     
     @IBOutlet weak var dropView: UIView! {
