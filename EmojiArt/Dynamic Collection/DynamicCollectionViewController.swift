@@ -38,7 +38,7 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
     }
     
     var isAdding = false
-        
+            
     //MARK:- Data Source
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

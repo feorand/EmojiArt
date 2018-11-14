@@ -12,17 +12,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
 {
     //MARK:- Properties
     
-    var currentEmojiArt = EmojiArt() {
-        didSet {
-            possibleEmojiVC.source = currentEmojiArt.possibleEmoji
-            
-            emojiImageVC.image = UIImage(fromOptionalData: currentEmojiArt.image.backgroundImageData)
-            
-            for emoji in currentEmojiArt.image.emoji {
-                emojiImageVC.addSymbol(symbol: emoji.attributedString, inPosition: emoji.position)
-            }
-        }
-    }
+    var currentEmojiArt = EmojiArt()
     
     var document: EmojiArtDocument!
     
@@ -49,10 +39,19 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     override func loadView() {
         super.loadView()
         
-        document.open() {success in
+        document.open() {[weak self] success in
             if success {
-                self.title = self.document.localizedName
-                self.currentEmojiArt = self.document.emojiArt
+                self?.title = self!.document.localizedName
+                self?.currentEmojiArt = self!.document.emojiArt
+                
+                self?.possibleEmojiVC.source = self!.currentEmojiArt.possibleEmoji
+                self?.possibleEmojiVC.collectionView.reloadData()
+                
+                self?.emojiImageVC.image = UIImage(fromOptionalData: self!.currentEmojiArt.image.backgroundImageData)
+                
+                for emoji in self?.currentEmojiArt.image.emoji ?? [] {
+                    self?.emojiImageVC.addSymbol(symbol: emoji.attributedString, inPosition: emoji.position)
+                }
             }
         }
 
