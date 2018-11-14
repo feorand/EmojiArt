@@ -12,9 +12,9 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
 {
     //MARK:- Properties
     
-    var emojiSource = EmojiArt()
+    var currentEmojiArt = EmojiArt()
     
-    var document: EmojiArtDocument?
+    var document: EmojiArtDocument!
     
     var emojiImageVC: CompositeImageViewController!
     
@@ -34,7 +34,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        document?.open() {success in
+        document.open() {success in
             if success {
                 self.title = self.document?.localizedName
                 self.emojiImageVC.image = UIImage(data: self.document?.emojiArt?.image.backgroundImageData ?? Data())
@@ -45,37 +45,33 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     //MARK:- Actions
     
     @IBAction func saveButtonPressed() {
-        let emojiJson = emojiSource.json()
-        let documentsDirectoryUrl = FileManager.DocumentsUrl()
-        let destinationFileUrl = documentsDirectoryUrl
-            .appendingPathComponent("Untitled")
-            .appendingPathExtension("json")
+        //TODO: change to using incremental auto-save
+        document.emojiArt = currentEmojiArt
         
-        do {
-            try emojiJson.write(to: destinationFileUrl)
-        } catch {
-            print("ERROR: Writing JSON to Documents, \(error)")
+        if document.emojiArt != nil {
+            document.save(to: document.fileURL, for: .forOverwriting)
         }
     }
     
     @IBAction func doneButtonPressed() {
-        dismiss(animated: true)
+        //TODO: change to using incremental auto-save
+        document.emojiArt = currentEmojiArt
+        
+        if document.emojiArt != nil {
+            document.save(to: document.fileURL, for: .forOverwriting) { [weak self] success in
+                self?.dismiss(animated: true)
+            }
+        }
     }
     
     //MARK:- CompositeImageViewControllerDelegate methods
     
     func compositeImageVCDidChangeBackground(to image: UIImage?) {
-        emojiSource.image.backgroundImageData = image?.pngData()
+        currentEmojiArt.image.backgroundImageData = image?.pngData()
     }
     
     func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
-        let emojiInfo = EmojiInfo(
-            x: Float(position.x),
-            y: Float(position.y),
-            symbol: symbol.string,
-            size: Int(symbol.size().height)
-        )
-        
-        emojiSource.image.emoji.append(emojiInfo)
+        let emojiInfo = EmojiInfo(fromAttributedString: symbol, andPosition: position)
+        currentEmojiArt.image.emoji.append(emojiInfo)
     }
 }
