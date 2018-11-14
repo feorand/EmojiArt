@@ -46,8 +46,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     @IBAction func saveButtonPressed() {
         let emojiJson = emojiSource.json()
-        let documentsDitectoryUrl = FileManager.DocumentsUrl()
-        let destinationFileUrl = documentsDitectoryUrl
+        let documentsDirectoryUrl = FileManager.DocumentsUrl()
+        let destinationFileUrl = documentsDirectoryUrl
             .appendingPathComponent("Untitled")
             .appendingPathExtension("json")
         

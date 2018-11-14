@@ -56,8 +56,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                 scrollView.zoomScale = 1.0
             }
             scrollView.contentSize = size
-            scrollHeightConstraint.constant = size.height
-            scrollWidthConstraint.constant = size.width
+            //scrollHeightConstraint.constant = size.height
+            //scrollWidthConstraint.constant = size.width
             
             dropImageHereLabel.isHidden = true
             dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -85,13 +85,13 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                     self?.image = image
                 }
             }
-
-            // Then load a full image from net (may be slow)
-            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
-                if let urlItem = urls.first, let url = urlItem as? URL {
-                    self?.setImageFromNetAsync(imageURL: url)
-                }
-            }
+//
+//            // Then load a full image from net (may be slow)
+//            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
+//                if let urlItem = urls.first, let url = urlItem as? URL {
+//                    self?.setImageFromNetAsync(imageURL: url)
+//                }
+//            }
             
         } else if let symbol = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.resultView)
