@@ -11,9 +11,13 @@ import Foundation
 // Type for storing all data of app's state
 // Currently it's an emoji image and a list of available emoji
 struct EmojiArt: Codable {
+    
+    var possibleEmoji: [String] = []
+    
     var image = EmojiArtImage()
     
     init(emoji: [String] = [], image: EmojiArtImage = EmojiArtImage()) {
+        self.possibleEmoji = emoji
         self.image = image
     }
     

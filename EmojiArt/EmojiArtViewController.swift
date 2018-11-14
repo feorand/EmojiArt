@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate
+class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate
 {
     //MARK:- Properties
     
@@ -24,6 +24,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var document: EmojiArtDocument!
     
+    var dynamicCollectionVC: DynamicCollectionViewController!
+    
     var emojiImageVC: CompositeImageViewController!
     
     //MARK:- ViewController life cycle
@@ -31,16 +33,20 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let secondChild = children.last as? CompositeImageViewController else {
+        if let firstChild = children.first as? DynamicCollectionViewController {
+            dynamicCollectionVC = firstChild
+        } else {
+            fatalError("Storyboard - missing connection to DynamicCollectionVC")
+        }
+        
+        if let secondChild = children.last as? CompositeImageViewController {
+            emojiImageVC = secondChild
+        } else {
             fatalError("Storyboard - missing connection to CompositeImageVC")
         }
         
-        emojiImageVC = secondChild
+        dynamicCollectionVC.delegate = self
         emojiImageVC.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         document.open() {success in
             if success {
@@ -75,7 +81,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         }
     }
     
-    //MARK:- CompositeImageViewControllerDelegate methods
+    //MARK:- CompositeImageVCDelegate methods
     
     func compositeImageVCDidChangeBackground(to image: UIImage?) {
         currentEmojiArt.image.backgroundImageData = image?.pngData()
@@ -84,5 +90,13 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
         let emojiInfo = EmojiInfo(fromAttributedString: symbol, andPosition: position)
         currentEmojiArt.image.emoji.append(emojiInfo)
-    }    
+    }
+    
+    //MARK:- DynamicCollectionVCDelegate methods
+    
+    func dynamicCollectionVCDidUpdateItems(_ items: [String]) {
+        if currentEmojiArt.possibleEmoji != items {
+            currentEmojiArt.possibleEmoji = items
+        }
+    }
 }
