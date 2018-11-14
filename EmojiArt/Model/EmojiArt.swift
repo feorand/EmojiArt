@@ -18,11 +18,11 @@ struct EmojiArt: Codable {
     }
     
     init?(fromJson json: Data) {
-        if let newEmojiArt = try? JSONDecoder().decode(EmojiArt.self, from: json) {
+        if  let newEmojiArt = try? JSONDecoder().decode(EmojiArt.self, from: json) {
             self = newEmojiArt
+        } else {
+            return nil
         }
-        
-        return nil
     }
     
     func json() -> Data {
