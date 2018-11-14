@@ -37,7 +37,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         document.open() {success in
             if success {
                 self.title = self.document?.localizedName
-                self.emojiImageVC.image = UIImage(data: self.document?.emojiArt?.image.backgroundImageData ?? Data())
+                self.emojiImageVC.compositeImage = (UIImage(fromOptionalData: self.document?.emojiArt?.image.backgroundImageData), [])
             }
         }
     }
@@ -73,5 +73,5 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
         let emojiInfo = EmojiInfo(fromAttributedString: symbol, andPosition: position)
         currentEmojiArt.image.emoji.append(emojiInfo)
-    }
+    }    
 }
