@@ -91,7 +91,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             session.loadObjects(ofClass: UIImage.self) { [weak self] images in
                 if let imageItem = images.first, let image = imageItem as? UIImage {
                     self?.image = image
-                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage)
+                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
                 }
             }
 //
@@ -105,7 +105,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         } else if let symbol = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.resultView)
             resultView.addSymbol(symbol, position: position)
-            delegate?.compositeImageVCDidUpdateImage(compositeImage)
+            delegate?.compositeImageVCDidUpdateImage(compositeImage, snapshot: resultView.snapshot)
         } else {
             print("Unknown object dropped")
         }
@@ -135,7 +135,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                 if let imageData = imageData, let image = UIImage(data: imageData) {
                     DispatchQueue.main.async {
                         self?.image = image
-                        self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage)
+                        self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
 
                     }
                 }

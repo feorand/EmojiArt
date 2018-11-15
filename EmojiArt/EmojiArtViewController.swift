@@ -68,7 +68,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     //MARK:- CompositeImageVCDelegate methods
         
-    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel])) {
+    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel]), snapshot: UIImage?) {
         currentEmojiArt.image.backgroundImageData = compositeImage.image?.pngData()
         
         currentEmojiArt.image.emoji = compositeImage
@@ -76,6 +76,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
             .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }
         
         document.emojiArt = currentEmojiArt
+        document.thumbnailImage = snapshot
         document.updateChangeCount(.done)
     }
     

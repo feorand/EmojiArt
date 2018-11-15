@@ -10,5 +10,5 @@ import UIKit
 
 protocol CompositeImageViewControllerDelegate {
     
-    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel]))
+    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel]), snapshot: UIImage?)
 }

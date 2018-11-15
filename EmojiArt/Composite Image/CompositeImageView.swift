@@ -34,4 +34,11 @@ class CompositeImageView: UIView
         background?.draw(in: bounds)
     }
     
+    var snapshot: UIImage? {
+        UIGraphicsBeginImageContext(bounds.size)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
