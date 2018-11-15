@@ -58,13 +58,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     }
     
     //MARK:- Actions
-    
-    @IBAction func saveButtonPressed() {
-        //TODO: change to using incremental auto-save
-        document.emojiArt = currentEmojiArt
-        document.save(to: document.fileURL, for: .forOverwriting)
-    }
-    
+        
     @IBAction func doneButtonPressed() {
         //TODO: change to using incremental auto-save
         document.emojiArt = currentEmojiArt

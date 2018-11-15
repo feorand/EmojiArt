@@ -207,11 +207,6 @@
                                 <action selector="doneButtonPressed" destination="BYZ-38-t0r" id="vMb-K4-PEs"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="q6t-vx-9Xp">
-                            <connections>
-                                <action selector="saveButtonPressed" destination="BYZ-38-t0r" id="0ED-eL-xKl"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
