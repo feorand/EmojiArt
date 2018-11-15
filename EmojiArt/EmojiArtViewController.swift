@@ -22,20 +22,6 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     //MARK:- ViewController life cycle
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        document.open() {success in
-//            if success {
-//                self.title = self.document.localizedName
-//
-//                if let emojiArt = self.document.emojiArt {
-//                    self.currentEmojiArt = emojiArt
-//                }
-//            }
-//        }
-//    }
-    
     override func loadView() {
         super.loadView()
         
@@ -89,14 +75,13 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     }
     
     //MARK:- CompositeImageVCDelegate methods
-    
-    func compositeImageVCDidChangeBackground(to image: UIImage?) {
-        currentEmojiArt.image.backgroundImageData = image?.pngData()
-    }
-    
-    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
-        let emojiInfo = EmojiInfo(fromAttributedString: symbol, andPosition: position)
-        currentEmojiArt.image.emoji.append(emojiInfo)
+        
+    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel])) {
+        currentEmojiArt.image.backgroundImageData = compositeImage.image?.pngData()
+        
+        currentEmojiArt.image.emoji = compositeImage
+            .symbols
+            .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }        
     }
     
     //MARK:- DynamicCollectionVCDelegate methods

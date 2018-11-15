@@ -10,7 +10,5 @@ import UIKit
 
 protocol CompositeImageViewControllerDelegate {
     
-    func compositeImageVCDidChangeBackground(to image: UIImage?)
-    
-    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint)
+    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel]))
 }
