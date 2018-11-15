@@ -8,40 +8,83 @@
 
 import UIKit
 
-class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate
+class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate
 {
     //MARK:- Properties
     
-    var emojiSource = EmojiArt()
+    var currentEmojiArt = EmojiArt()
+    
+    var document: EmojiArtDocument!
+    
+    var possibleEmojiVC: DynamicCollectionViewController!
+    
+    var emojiImageVC: CompositeImageViewController!
     
     //MARK:- ViewController life cycle
     
-    override func viewDidLoad() {
-//        guard let emojiCollectionVC = children.first as? DynamicCollectionViewController else {
-//            fatalError("Storyboard - missing connection to DynamicCollectionVC")
-//        }
+    override func loadView() {
+        super.loadView()
         
-        guard let emojiImageVC = children.last as? CompositeImageViewController else {
-            fatalError("Storyboard - missing connection to CompositeImageVC")
+        document.open() {[weak self] success in
+            if success {
+                self?.title = self!.document.localizedName
+                self?.currentEmojiArt = self!.document.emojiArt
+                
+                self?.possibleEmojiVC.source = self!.currentEmojiArt.possibleEmoji
+                self?.possibleEmojiVC.collectionView.reloadData()
+                
+                self?.emojiImageVC.image = UIImage(fromOptionalData: self!.currentEmojiArt.image.backgroundImageData)
+                
+                for emoji in self?.currentEmojiArt.image.emoji ?? [] {
+                    self?.emojiImageVC.addSymbol(symbol: emoji.attributedString, inPosition: emoji.position)
+                }
+            }
         }
-        
-        emojiImageVC.delegate = self
+
     }
     
-    //MARK:- CompositeImageViewControllerDelegate methods
-    
-    func compositeImageVCDidChangeBackground(to image: UIImage?) {
-        emojiSource.image.backgroundImageData = image?.pngData()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SegueSettings.PresentDynamicCollection {
+            if let dynamicCollectionVC = segue.destination as? DynamicCollectionViewController {
+                possibleEmojiVC = dynamicCollectionVC
+                possibleEmojiVC.delegate = self
+            }
+        } else if segue.identifier == SegueSettings.PresentCompositeImage {
+            if let compositeImageVC = segue.destination as? CompositeImageViewController {
+                emojiImageVC = compositeImageVC
+                emojiImageVC.delegate = self
+            }
+        }
     }
     
-    func compositeImageVCDidAddSymbol(_ symbol: NSAttributedString, position: CGPoint) {
-        let emojiInfo = EmojiInfo(
-            x: Float(position.x),
-            y: Float(position.y),
-            symbol: symbol.string,
-            size: Int(symbol.size().height)
-        )
+    //MARK:- Actions
+    
+    @IBAction func doneButtonPressed() {
+        dismiss(animated: true) {
+            self.document.close()
+        }
+
+    }
+    
+    //MARK:- CompositeImageVCDelegate methods
         
-        emojiSource.image.emoji.append(emojiInfo)
+    func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel]), snapshot: UIImage?) {
+        currentEmojiArt.image.backgroundImageData = compositeImage.image?.pngData()
+        
+        currentEmojiArt.image.emoji = compositeImage
+            .symbols
+            .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }
+        
+        document.emojiArt = currentEmojiArt
+        document.thumbnailImage = snapshot
+        document.updateChangeCount(.done)
+    }
+    
+    //MARK:- DynamicCollectionVCDelegate methods
+    
+    func dynamicCollectionVCDidUpdateItems(_ items: [String]) {
+        if currentEmojiArt.possibleEmoji != items {
+            currentEmojiArt.possibleEmoji = items
+        }
     }
 }

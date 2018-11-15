@@ -13,5 +13,5 @@ struct EmojiInfo: Codable {
     var x: Float
     var y: Float
     let symbol: String
-    var size: Int
+    var size: Float
 }

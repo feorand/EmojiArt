@@ -29,10 +29,16 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
     
     //MARK:- Properties
     
-    var source = "😀😋😡😱🐱🐴🐝🐥🐟🐉🍔🍎".map{ String($0) }
+    var delegate: DynamicCollectionViewControllerDelegate?
+    
+    var source: [String] = [] {
+        didSet {
+            delegate?.dynamicCollectionVCDidUpdateItems(source)
+        }
+    }
     
     var isAdding = false
-
+            
     //MARK:- Data Source
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

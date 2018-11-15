@@ -40,30 +40,38 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     var resultView = CompositeImageView()
     
+    var compositeImage: (image: UIImage?, symbols: [UILabel]) {
+        return (image, symbols)
+    }
+    
+    var symbols: [UILabel] {
+        return resultView.symbols
+    }
+    
     var image: UIImage? {
         get {
             return resultView.background
         }
         
         set {
-            if let newValue = newValue {
-                let size = newValue.size
-                
-                resultView.changeBackgroundImage(to: newValue)
-                
-                if let dropView = dropView, size.width > 0, size.height > 0 {
-                    scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
-                } else {
-                    scrollView.zoomScale = 1.0
-                }
-                scrollView.contentSize = size
-                
-                dropImageHereLabel.isHidden = true
-                dropView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                
-                delegate?.compositeImageVCDidChangeBackground(to: newValue)
+            let size = newValue?.size ?? CGSize.zero
+            
+            resultView.changeBackgroundImage(to: newValue)
+            
+            if let dropView = dropView, size.width > 0, size.height > 0 {
+                scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+            } else {
+                scrollView?.zoomScale = 1.0
             }
+            scrollView?.contentSize = size
+            
+            dropImageHereLabel?.isHidden = true
+            dropView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
+    }
+    
+    func addSymbol(symbol: NSAttributedString, inPosition position: CGPoint) {
+        resultView.addSymbol(symbol, position: position)
     }
     
     //MARK:- Drop
@@ -83,20 +91,21 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             session.loadObjects(ofClass: UIImage.self) { [weak self] images in
                 if let imageItem = images.first, let image = imageItem as? UIImage {
                     self?.image = image
+                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
                 }
             }
-
-            // Then load a full image from net (may be slow)
-            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
-                if let urlItem = urls.first, let url = urlItem as? URL {
-                    self?.setImageFromNetAsync(imageURL: url)
-                }
-            }
+//
+//            // Then load a full image from net (may be slow)
+//            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
+//                if let urlItem = urls.first, let url = urlItem as? URL {
+//                    self?.setImageFromNetAsync(imageURL: url)
+//                }
+//            }
             
         } else if let symbol = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.resultView)
             resultView.addSymbol(symbol, position: position)
-            delegate?.compositeImageVCDidAddSymbol(symbol, position: position)
+            delegate?.compositeImageVCDidUpdateImage(compositeImage, snapshot: resultView.snapshot)
         } else {
             print("Unknown object dropped")
         }
@@ -121,11 +130,13 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     private func setImageFromNetAsync(imageURL: URL?) {
         if let url = imageURL {
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let imageData = try? Data(contentsOf: url)
                 if let imageData = imageData, let image = UIImage(data: imageData) {
                     DispatchQueue.main.async {
-                        self.image = image
+                        self?.image = image
+                        self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
+
                     }
                 }
             }
