@@ -58,14 +58,12 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     }
     
     //MARK:- Actions
-        
+    
     @IBAction func doneButtonPressed() {
-        //TODO: change to using incremental auto-save
-        document.emojiArt = currentEmojiArt
-        
-        document.save(to: document.fileURL, for: .forOverwriting) { [weak self] success in
-            self?.dismiss(animated: true)
+        dismiss(animated: true) {
+            self.document.close()
         }
+
     }
     
     //MARK:- CompositeImageVCDelegate methods
@@ -75,7 +73,10 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         
         currentEmojiArt.image.emoji = compositeImage
             .symbols
-            .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }        
+            .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }
+        
+        document.emojiArt = currentEmojiArt
+        document.updateChangeCount(.done)
     }
     
     //MARK:- DynamicCollectionVCDelegate methods
