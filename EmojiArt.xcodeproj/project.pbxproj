@@ -88,6 +88,16 @@
 			path = Document;
 			sourceTree = "<group>";
 		};
+		7A3582C321A2C5B6000852FD /* Framework Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7A3582BB219C0D4B000852FD /* UIImage+Extension.swift */,
+				7A3582C121A28050000852FD /* URL+Extension.swift */,
+				7A3582B02191B0B0000852FD /* FileManager+Extension.swift */,
+			);
+			path = "Framework Extensions";
+			sourceTree = "<group>";
+		};
 		7A4EC2A22040356800BBA338 = {
 			isa = PBXGroup;
 			children = (
@@ -110,13 +120,11 @@
 				7A4EC2B22040356900BBA338 /* Main.storyboard */,
 				7A4EC2B02040356900BBA338 /* EmojiArtViewController.swift */,
 				7A3582B9219C04EB000852FD /* EmojiInfo+Extension.swift */,
-				7A3582BB219C0D4B000852FD /* UIImage+Extension.swift */,
-				7A3582C121A28050000852FD /* URL+Extension.swift */,
-				7A3582B02191B0B0000852FD /* FileManager+Extension.swift */,
 				7A3582A721918297000852FD /* Model */,
 				7A3582B82192D34A000852FD /* Document */,
 				7AEF0A30218C7A62003D0869 /* Composite Image */,
 				7AEF0A31218C7A86003D0869 /* Dynamic Collection */,
+				7A3582C321A2C5B6000852FD /* Framework Extensions */,
 				7AEF0A32218C7D79003D0869 /* Settings.swift */,
 				7A4EC2BA2040356900BBA338 /* Info.plist */,
 				7A4EC2C0204035FA00BBA338 /* Support Files */,
