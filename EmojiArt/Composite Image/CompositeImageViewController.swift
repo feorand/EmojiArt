@@ -79,8 +79,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     //MARK:- Drop
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        return session.canLoadObjects(ofClass: NSURL.self) &&
-            session.canLoadObjects(ofClass: UIImage.self) ||
+        return session.canLoadObjects(ofClass: NSURL.self) ||
             session.canLoadObjects(ofClass: NSAttributedString.self)
     }
     
@@ -90,18 +89,18 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         if session.localDragSession?.localContext as? UICollectionView == nil {
-            var backupImage: UIImage? = nil
-            
-            session.loadObjects(ofClass: UIImage.self) { images in
-                if let imageItem = images.first, let image = imageItem as? UIImage {
-                    backupImage = image
-                }
-            }
-
-            // Then load a full image from net (may be slow)
             session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
                 if let urlItem = urls.first, let url = urlItem as? URL {
-                    self?.setImageFromNetAsync(imageURL: url, backupImage: backupImage)
+                    self?.fetchImage(imageURL: url) { imageData in
+                        if let imageData = imageData, let image = UIImage(data: imageData) {
+                            DispatchQueue.main.async {
+                                self?.image = image
+                                self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
+                            }
+                        } else {
+                            self?.showFetchingFailed()
+                        }
+                    }
                 }
             }
             
@@ -131,23 +130,16 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     //MARK:- Utilities
     
-    private func setImageFromNetAsync(imageURL: URL?, backupImage: UIImage?) {
+    private func fetchImage(imageURL: URL?, completionHandler: @escaping ((Data?) -> Void)) {
         if let url = imageURL {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            DispatchQueue.global(qos: .userInitiated).async {
                 let imageData = try? Data(contentsOf: url.networkImageURL)
-                var imageToSet: UIImage? = nil
-                if let imageData = imageData, let image = UIImage(data: imageData) {
-                    imageToSet = image
-                } else {
-                    imageToSet = backupImage
-                }
-
-                DispatchQueue.main.async {
-                    self?.image = imageToSet
-                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
-
-                }
+                completionHandler(imageData)
             }
         }
+    }
+    
+    private func showFetchingFailed() {
+        print("Fetching failed")
     }
 }
