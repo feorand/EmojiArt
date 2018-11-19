@@ -55,15 +55,19 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         
         set {
             let size = newValue?.size ?? CGSize.zero
-            
+            scrollView.zoomScale = 1.0
+
             resultView.changeBackgroundImage(to: newValue)
+            scrollView.contentSize = size
+            
+            scrollWidthConstraint.constant = size.width
+            scrollHeightConstraint.constant = size.height
             
             if let dropView = dropView, size.width > 0, size.height > 0 {
-                scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
-            } else {
-                scrollView?.zoomScale = 1.0
+                scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
+                //scrollView.zoomScale = dropView.bounds.size.width / size.width
+                //scrollView.zoomScale = 1.0
             }
-            scrollView?.contentSize = size
             
             dropImageHereLabel?.isHidden = true
             dropView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -88,19 +92,19 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         if session.localDragSession?.localContext as? UICollectionView == nil {
             // First load a miniature of an image so user has something to see
-            session.loadObjects(ofClass: UIImage.self) { [weak self] images in
-                if let imageItem = images.first, let image = imageItem as? UIImage {
-                    self?.image = image
-                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
-                }
-            }
-//
-//            // Then load a full image from net (may be slow)
-//            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
-//                if let urlItem = urls.first, let url = urlItem as? URL {
-//                    self?.setImageFromNetAsync(imageURL: url)
+//            session.loadObjects(ofClass: UIImage.self) { [weak self] images in
+//                if let imageItem = images.first, let image = imageItem as? UIImage {
+//                    self?.image = image
+//                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
 //                }
 //            }
+
+            // Then load a full image from net (may be slow)
+            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
+                if let urlItem = urls.first, let url = urlItem as? URL {
+                    self?.setImageFromNetAsync(imageURL: url)
+                }
+            }
             
         } else if let symbol = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.resultView)
@@ -131,7 +135,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     private func setImageFromNetAsync(imageURL: URL?) {
         if let url = imageURL {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let imageData = try? Data(contentsOf: url)
+                let imageData = try? Data(contentsOf: url.networkImageURL)
                 if let imageData = imageData, let image = UIImage(data: imageData) {
                     DispatchQueue.main.async {
                         self?.image = image
