@@ -96,6 +96,17 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                             DispatchQueue.main.async {
                                 self?.image = image
                                 self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
+                                
+                                if let imageVC = self {
+                                    NotificationCenter.default.post(
+                                        name: .CompositeImageDidChange,
+                                        object: imageVC,
+                                        userInfo: [
+                                            "image": imageVC.compositeImage,
+                                            "snapshot": imageVC.resultView.snapshot as Any
+                                        ]
+                                    )
+                                }
                             }
                         } else {
                             DispatchQueue.main.async {

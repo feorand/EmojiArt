@@ -20,6 +20,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var emojiImageVC: CompositeImageViewController!
     
+    var emojiImageDidChangeObserver: NSObjectProtocol!
+    
     //MARK:- ViewController life cycle
     
     override func loadView() {
@@ -40,7 +42,36 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emojiImageDidChangeObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.CompositeImageDidChange,
+            object: nil,
+            queue: nil,
+            using: {[weak self] notification in
+                let userInfo = notification.userInfo
+                
+                let image = userInfo?["image"] as? (UIImage?, [UILabel])
+                let snapshot = userInfo?["snapshot"] as? UIImage
+                
+                self?.currentEmojiArt.image.backgroundImageData = image?.0?.pngData()
+                
+                self?.currentEmojiArt.image.emoji = (image?.1 ?? [])
+                    .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }
+                
+                self?.document.emojiArt = self!.currentEmojiArt
+                self?.document.thumbnailImage = snapshot
+                self?.document.updateChangeCount(.done)
 
+        }
+        )
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(emojiImageDidChangeObserver)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
