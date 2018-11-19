@@ -98,7 +98,9 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
                                 self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
                             }
                         } else {
-                            self?.showFetchingFailed()
+                            DispatchQueue.main.async {
+                                self?.showFetchingFailed()
+                            }
                         }
                     }
                 }
@@ -140,6 +142,15 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     }
     
     private func showFetchingFailed() {
-        print("Fetching failed")
+        let alert = UIAlertController(
+            title: "Error",
+            message: "Could not download image from Web",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "Not OK", style: .destructive, handler: nil))
+        
+        present(alert, animated: true)
     }
 }
