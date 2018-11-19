@@ -13,8 +13,8 @@ extension URL {
         for queryComponent in query?.components(separatedBy: "&") ?? [] {
             let parametersComponents = queryComponent.components(separatedBy: "=")
             
-            if parametersComponents.count == 2 && parametersComponents[1] == "imgurl" {
-                let url = URL(string: parametersComponents[0].removingPercentEncoding ?? "")
+            if parametersComponents.count == 2 && parametersComponents[0] == "imgurl" {
+                let url = URL(string: parametersComponents[1].removingPercentEncoding ?? "")
                 
                 if let url = url {
                     return url
