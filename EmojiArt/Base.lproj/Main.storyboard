@@ -458,7 +458,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="CSs-3b-AWe" firstAttribute="centerY" secondItem="oBv-gM-nc9" secondAttribute="centerY" id="S2x-bF-1AG"/>
                             <constraint firstItem="CSs-3b-AWe" firstAttribute="centerX" secondItem="Uml-Wd-RDL" secondAttribute="centerX" id="apb-e6-Yz0"/>
