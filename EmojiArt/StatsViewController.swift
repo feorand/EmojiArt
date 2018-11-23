@@ -45,6 +45,24 @@ class StatsViewController: UIViewController
                 
                 modifiedDateLabel.text = dateFormatter.string(from: modificationDate)
             }
+            
+            previewImageView.image = document.thumbnailImage
+
+            if let image = document.thumbnailImage {
+                previewImageView.removeConstraint(aspectRatioConstraint)
+                
+                let newAspectRatioConstraint = NSLayoutConstraint(
+                    item: previewImageView,
+                    attribute: .width,
+                    relatedBy: .equal,
+                    toItem: previewImageView,
+                    attribute: .height,
+                    multiplier: image.size.width / image.size.height,
+                    constant: 0
+                )
+                
+                previewImageView.addConstraint(newAspectRatioConstraint)
+            }
         }
     }
 }

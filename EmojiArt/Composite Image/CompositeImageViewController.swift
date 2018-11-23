@@ -40,6 +40,10 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     var resultView = CompositeImageView()
     
+    var snapshot: UIImage? {
+        return resultView.snapshot
+    }
+    
     var compositeImage: (image: UIImage?, symbols: [UILabel]) {
         return (image, symbols)
     }
