@@ -22,6 +22,8 @@ class StatsViewController: UIViewController
     
     @IBOutlet weak var topLevelStack: UIStackView!
     
+    @IBOutlet weak var returnButton: UIButton!
+    
     //MARK:- Model
     
     var document: EmojiArtDocument!
@@ -64,24 +66,30 @@ class StatsViewController: UIViewController
                 
                 modifiedDateLabel.text = dateFormatter.string(from: modificationDate)
             }
-            
-            previewImageView.image = document.thumbnailImage
+        }
+        
+        if let image = document.thumbnailImage {
+            previewImageView.image = image
 
-            if let image = document.thumbnailImage {
-                previewImageView.removeConstraint(aspectRatioConstraint)
-                
-                let newAspectRatioConstraint = NSLayoutConstraint(
-                    item: previewImageView,
-                    attribute: .width,
-                    relatedBy: .equal,
-                    toItem: previewImageView,
-                    attribute: .height,
-                    multiplier: image.size.width / image.size.height,
-                    constant: 0
-                )
-                
-                previewImageView.addConstraint(newAspectRatioConstraint)
-            }
+            previewImageView.removeConstraint(aspectRatioConstraint)
+            
+            let newAspectRatioConstraint = NSLayoutConstraint(
+                item: previewImageView,
+                attribute: .width,
+                relatedBy: .equal,
+                toItem: previewImageView,
+                attribute: .height,
+                multiplier: image.size.width / image.size.height,
+                constant: 0
+            )
+            
+            previewImageView.addConstraint(newAspectRatioConstraint)
+        }
+
+        if popoverPresentationController != nil {
+            previewImageView.isHidden = true
+            returnButton.isHidden = true
+            view.backgroundColor = .clear
         }
     }
 }

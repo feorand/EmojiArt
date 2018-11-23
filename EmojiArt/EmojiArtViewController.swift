@@ -100,19 +100,18 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         }
     }
     
-    @IBAction func unwind(_ segue: UIStoryboardSegue) {
-        
-    }
-    
     //MARK:- Actions
     
-    @IBAction func doneButtonPressed() {
+    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+        close()
+    }
+
+    @IBAction func close() {
         dismiss(animated: true) {
             self.document.close()
         }
-
     }
-    
+        
     //MARK:- CompositeImageVCDelegate methods
         
     func compositeImageVCDidUpdateImage(_ compositeImage: (image: UIImage?, symbols: [UILabel]), snapshot: UIImage?) {
