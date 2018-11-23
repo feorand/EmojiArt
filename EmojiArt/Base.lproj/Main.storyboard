@@ -16,11 +16,11 @@
             <objects>
                 <viewController id="hVf-nU-krf" customClass="StatsViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SqU-ir-vGl">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2KV-kL-yMH">
-                                <rect key="frame" x="392" y="267" width="240" height="234"/>
+                                <rect key="frame" x="150" y="193" width="240" height="234"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D7j-nS-0cY">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -87,16 +87,18 @@
                         <viewLayoutGuide key="safeArea" id="neg-ED-BPW"/>
                     </view>
                     <toolbarItems/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="aspectRatioConstraint" destination="ZjL-Vj-4g5" id="C4J-1Z-KO5"/>
                         <outlet property="modifiedDateLabel" destination="BQC-t2-h6r" id="I83-og-ypV"/>
                         <outlet property="previewImageView" destination="D7j-nS-0cY" id="UbC-vj-JND"/>
                         <outlet property="sizeLabel" destination="YAr-mt-jeS" id="DCn-kW-eTk"/>
+                        <outlet property="topLevelStack" destination="2KV-kL-yMH" id="sV7-Ul-Cx0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZD-yK-TJa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1206" y="-752"/>
+            <point key="canvasLocation" x="1469" y="-752"/>
         </scene>
         <!--Dynamic Collection View Controller-->
         <scene sceneID="tZm-XG-9tL">
@@ -298,11 +300,20 @@
                                 <action selector="doneButtonPressed" destination="BYZ-38-t0r" id="vMb-K4-PEs"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Info" id="TYt-ss-cHq">
-                            <connections>
-                                <segue destination="hVf-nU-krf" kind="presentation" identifier="presentModallyStats" id="HJV-xi-7Mi"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Info" id="TYt-ss-cHq">
+                                <connections>
+                                    <segue destination="hVf-nU-krf" kind="presentation" identifier="presentStats" id="HJV-xi-7Mi"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Pop" id="Grm-jf-edv">
+                                <connections>
+                                    <segue destination="hVf-nU-krf" kind="popoverPresentation" identifier="presentStats" popoverAnchorBarButtonItem="Grm-jf-edv" id="9ei-hQ-4mj">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -370,4 +381,7 @@
             <point key="canvasLocation" x="1469" y="52"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="9ei-hQ-4mj"/>
+    </inferredMetricsTieBreakers>
 </document>

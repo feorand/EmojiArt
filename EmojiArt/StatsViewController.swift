@@ -20,6 +20,8 @@ class StatsViewController: UIViewController
     
     @IBOutlet weak var aspectRatioConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var topLevelStack: UIStackView!
+    
     //MARK:- Model
     
     var document: EmojiArtDocument!
@@ -29,6 +31,16 @@ class StatsViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super .viewWillLayoutSubviews()
+        
+        let fittedSize = topLevelStack.sizeThatFits(UIView.layoutFittingCompressedSize)
+        preferredContentSize = CGSize(
+            width: fittedSize.width + DocumentStatsSettings.HorizontalPadding,
+            height: fittedSize.height + DocumentStatsSettings.VerticalPadding
+        )
     }
     
     //MARK:- Actions
