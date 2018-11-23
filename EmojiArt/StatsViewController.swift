@@ -34,8 +34,10 @@ class StatsViewController: UIViewController
     
     private func updateUI() {
         if let documentAttributes = try? FileManager.default.attributesOfItem(atPath: document.fileURL.path) {
-            sizeLabel.text = documentAttributes[FileAttributeKey.size] as? String
-            
+            if let fileSize = documentAttributes[FileAttributeKey.size] as? Int {
+                sizeLabel.text = "\(fileSize) bytes"
+            }
+
             if let modificationDate = documentAttributes[FileAttributeKey.modificationDate] as? Date {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .short
