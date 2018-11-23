@@ -10,4 +10,8 @@ import UIKit
 
 class StatsViewController: UIViewController {
     
+    @IBOutlet weak var previewImageView: UIImageView!
+    @IBOutlet weak var sizeLabel: UILabel!
+    @IBOutlet weak var modifiedDateLabel: UILabel!
+    @IBOutlet weak var aspectRatioConstraint: NSLayoutConstraint!
 }
