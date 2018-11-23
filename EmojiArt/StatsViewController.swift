@@ -26,7 +26,9 @@ class StatsViewController: UIViewController
     
     //MARK:- Model
     
-    var document: EmojiArtDocument!
+    var document: EmojiArtDocument? {
+        didSet { updateUI() }
+    }
     
     //MARK:- ViewController lifecycle
     
@@ -54,9 +56,11 @@ class StatsViewController: UIViewController
     //MARK:- Utilities
     
     private func updateUI() {
+        guard let document = document else { return }
+        
         if let documentAttributes = try? FileManager.default.attributesOfItem(atPath: document.fileURL.path) {
             if let fileSize = documentAttributes[FileAttributeKey.size] as? Int {
-                sizeLabel.text = "\(fileSize) bytes"
+                sizeLabel?.text = "\(fileSize) bytes"
             }
 
             if let modificationDate = documentAttributes[FileAttributeKey.modificationDate] as? Date {
@@ -64,31 +68,31 @@ class StatsViewController: UIViewController
                 dateFormatter.dateStyle = .short
                 dateFormatter.timeStyle = .short
                 
-                modifiedDateLabel.text = dateFormatter.string(from: modificationDate)
+                modifiedDateLabel?.text = dateFormatter.string(from: modificationDate)
             }
         }
         
-        if let image = document.thumbnailImage {
-            previewImageView.image = image
+        if let image = document.thumbnailImage, let imageView = previewImageView {
+            imageView.image = image
 
-            previewImageView.removeConstraint(aspectRatioConstraint)
+            imageView.removeConstraint(aspectRatioConstraint)
             
             let newAspectRatioConstraint = NSLayoutConstraint(
-                item: previewImageView,
+                item: imageView,
                 attribute: .width,
                 relatedBy: .equal,
-                toItem: previewImageView,
+                toItem: imageView,
                 attribute: .height,
                 multiplier: image.size.width / image.size.height,
                 constant: 0
             )
             
-            previewImageView.addConstraint(newAspectRatioConstraint)
+            imageView.addConstraint(newAspectRatioConstraint)
         }
 
         if popoverPresentationController != nil {
-            previewImageView.isHidden = true
-            returnButton.isHidden = true
+            previewImageView?.isHidden = true
+            returnButton?.isHidden = true
             view.backgroundColor = .clear
         }
     }
