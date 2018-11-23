@@ -30,6 +30,10 @@ class StatsViewController: UIViewController
         updateUI()
     }
     
+    @IBAction func returnButtonPressed() {
+        presentingViewController?.dismiss(animated: true)
+    }
+    
     //MARK:- Utilities
     
     private func updateUI() {

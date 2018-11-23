@@ -73,7 +73,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal" title="Return"/>
                                         <connections>
-                                            <segue destination="srQ-j4-cN7" kind="unwind" unwindAction="unwind:" id="p7Y-uc-8fZ"/>
+                                            <action selector="returnButtonPressed" destination="hVf-nU-krf" eventType="touchUpInside" id="kNo-IY-gpc"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -98,7 +98,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZD-yK-TJa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="srQ-j4-cN7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1206" y="-752"/>
         </scene>
