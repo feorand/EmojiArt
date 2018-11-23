@@ -85,6 +85,10 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 emojiImageVC = compositeImageVC
                 emojiImageVC.delegate = self
             }
+        } else if segue.identifier == SegueSettings.PresentModallyStats {
+            if let statsVC = segue.destination as? StatsViewController {
+                statsVC.document = document
+            }
         }
     }
     

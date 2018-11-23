@@ -21,4 +21,5 @@ struct EmojiSettings {
 struct SegueSettings {
     static let PresentDynamicCollection = "presentDynamicCollection"
     static let PresentCompositeImage = "presentCompositeImage"
+    static let PresentModallyStats = "presentModallyStats"
 }

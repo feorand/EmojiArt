@@ -291,7 +291,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Info" id="TYt-ss-cHq">
                             <connections>
-                                <segue destination="hVf-nU-krf" kind="presentation" identifier="Present Modally Stats" id="HJV-xi-7Mi"/>
+                                <segue destination="hVf-nU-krf" kind="presentation" identifier="presentModallyStats" id="HJV-xi-7Mi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
