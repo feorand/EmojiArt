@@ -86,10 +86,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="neg-ED-BPW"/>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem systemItem="done" id="wCd-vY-Hat"/>
-                    </toolbarItems>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <toolbarItems/>
                     <connections>
                         <outlet property="aspectRatioConstraint" destination="ZjL-Vj-4g5" id="C4J-1Z-KO5"/>
                         <outlet property="modifiedDateLabel" destination="BQC-t2-h6r" id="I83-og-ypV"/>

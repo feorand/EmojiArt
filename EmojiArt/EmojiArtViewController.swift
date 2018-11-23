@@ -94,6 +94,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 }
                 
                 statsVC.document = document
+                
+                statsVC.modalPresentationStyle = .formSheet
             }
         }
     }

@@ -27,8 +27,11 @@ class StatsViewController: UIViewController
     //MARK:- ViewController lifecycle
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         updateUI()
     }
+    
+    //MARK:- Actions
     
     @IBAction func returnButtonPressed() {
         presentingViewController?.dismiss(animated: true)
