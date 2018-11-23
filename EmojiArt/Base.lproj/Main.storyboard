@@ -10,6 +10,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Stats View Controller-->
+        <scene sceneID="GEJ-iE-Xx9">
+            <objects>
+                <viewController id="hVf-nU-krf" customClass="StatsViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SqU-ir-vGl">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="neg-ED-BPW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EZD-yK-TJa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1206" y="-752"/>
+        </scene>
         <!--Dynamic Collection View Controller-->
         <scene sceneID="tZm-XG-9tL">
             <objects>
@@ -183,7 +198,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I36-yJ-T5f" userLabel="Composite Image View">
-                                <rect key="frame" x="0.0" y="150" width="1024" height="618"/>
+                                <rect key="frame" x="0.0" y="150" width="1024" height="568"/>
                                 <connections>
                                     <segue destination="0cP-C3-Elj" kind="embed" identifier="presentCompositeImage" id="RE1-Ee-nCN"/>
                                 </connections>
@@ -201,13 +216,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5o4-wx-oSU"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="Gbb-Jh-u9z"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="VsX-lh-weJ">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="2fb-me-eO8">
                             <connections>
                                 <action selector="doneButtonPressed" destination="BYZ-38-t0r" id="vMb-K4-PEs"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Info" id="TYt-ss-cHq"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -218,7 +238,7 @@
             <objects>
                 <viewController id="0cP-C3-Elj" customClass="CompositeImageViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YVh-QZ-lvR">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ete-97-SD0" userLabel="Drop Zone">
