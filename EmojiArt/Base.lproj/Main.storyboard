@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2KV-kL-yMH">
-                                <rect key="frame" x="392" y="290.5" width="240" height="187"/>
+                                <rect key="frame" x="392" y="267" width="240" height="234"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D7j-nS-0cY">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -68,6 +68,14 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSf-sk-0yc">
+                                        <rect key="frame" x="88" y="195" width="64" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Return"/>
+                                        <connections>
+                                            <segue destination="srQ-j4-cN7" kind="unwind" unwindAction="unwind:" id="p7Y-uc-8fZ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -78,6 +86,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="neg-ED-BPW"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="done" id="wCd-vY-Hat"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="aspectRatioConstraint" destination="ZjL-Vj-4g5" id="C4J-1Z-KO5"/>
                         <outlet property="modifiedDateLabel" destination="BQC-t2-h6r" id="I83-og-ypV"/>
@@ -86,6 +98,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZD-yK-TJa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="srQ-j4-cN7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1206" y="-752"/>
         </scene>

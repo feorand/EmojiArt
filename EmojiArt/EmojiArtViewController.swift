@@ -74,6 +74,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         NotificationCenter.default.removeObserver(emojiImageDidChangeObserver)
     }
     
+    //MARK:- Segues
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueSettings.PresentDynamicCollection {
             if let dynamicCollectionVC = segue.destination as? DynamicCollectionViewController {
@@ -90,6 +92,10 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 statsVC.document = document
             }
         }
+    }
+    
+    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+        
     }
     
     //MARK:- Actions
