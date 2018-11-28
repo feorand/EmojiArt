@@ -17,10 +17,9 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     @IBOutlet weak var embeddedStatsWidthConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var cameraButton: UIBarButtonItem!
-    {
+    @IBOutlet weak var cameraButton: UIBarButtonItem! {
         didSet {
-            cameraButton.isEnabled = UIImagePickerController.isCameraDeviceAvailable(.front) || UIImagePickerController.isCameraDeviceAvailable(.rear)
+            cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         }
     }
     
@@ -39,8 +38,6 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     var emojiImageDidChangeObserver: NSObjectProtocol!
     
     var documentStateDidChangeObserver: NSObjectProtocol!
-    
-    var imagePickerController: UIImagePickerController?
     
     //MARK:- ViewController life cycle
     
@@ -160,8 +157,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
             return
         }
         
-        imagePickerController = UIImagePickerController()
-        imagePickerController?.delegate = self
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
         
         let availableMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera)
         
@@ -170,11 +167,11 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
             return
         }
         
-        imagePickerController?.allowsEditing = true
-        imagePickerController?.mediaTypes = [kUTTypeImage as String]
-        imagePickerController?.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        imagePickerController.sourceType = .camera
         
-        present(imagePickerController!, animated: true)
+        present(imagePickerController, animated: true)
     }
     
     //MARK:- CompositeImageVCDelegate methods
@@ -201,7 +198,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     //MARK:- ImagePickerVCDelegate methods
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        imagePickerController?.dismiss(animated: true)
+        picker.dismiss(animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -209,7 +206,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         let originalmage = info[.originalImage] as? UIImage
         let resultImage = editedImage ?? originalmage ?? UIImage()
         
-        imagePickerController?.dismiss(animated: true) {
+        picker.dismiss(animated: true) {
             self.emojiImageVC.image = resultImage.scaled(by: ImageSettings.photoScale)
             
             let snapshot = self.emojiImageVC.snapshot
