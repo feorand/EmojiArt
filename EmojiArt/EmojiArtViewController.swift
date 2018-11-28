@@ -35,7 +35,11 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var documentStatsVC: StatsViewController!
     
-    var emojiImageDidChangeObserver: NSObjectProtocol!
+    var emojiImageDidChangeObserver: NSObjectProtocol! {
+        didSet {
+            
+        }
+    }
     
     var documentStateDidChangeObserver: NSObjectProtocol!
     
@@ -86,12 +90,6 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 }
             }
         )
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(emojiImageDidChangeObserver)
-        NotificationCenter.default.removeObserver(documentStateDidChangeObserver)
     }
     
     private func documentChanged(image: (UIImage?, [UILabel])?, snapshot: UIImage?) {
@@ -147,6 +145,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
 
     @IBAction func close() {
         dismiss(animated: true) {
+            NotificationCenter.default.removeObserver(self.emojiImageDidChangeObserver)
+            NotificationCenter.default.removeObserver(self.documentStateDidChangeObserver)
             self.document.close()
         }
     }
