@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate
+class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     //MARK:- Outlets
     
@@ -16,11 +17,12 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     @IBOutlet weak var embeddedStatsWidthConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var cameraButton: UIBarButtonItem! {
-        didSet {
-            cameraButton.isEnabled = UIImagePickerController.isCameraDeviceAvailable(.front) || UIImagePickerController.isCameraDeviceAvailable(.rear)
-        }
-    }
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+//    {
+//        didSet {
+//            cameraButton.isEnabled = UIImagePickerController.isCameraDeviceAvailable(.front) || UIImagePickerController.isCameraDeviceAvailable(.rear)
+//        }
+//    }
     
     //MARK:- Properties
     
@@ -147,7 +149,25 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     }
     
     @IBAction func cameraButtonTapped() {
-        //TODO: Make actual tapped code
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            print("camera not available")
+            return
+        }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        let availableMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera)
+        
+        guard let media = availableMediaTypes, media.contains(kUTTypeImage as String) else {
+            print("image media type is not available")
+            return
+        }
+        
+        imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        imagePickerController.sourceType = .camera
+        
+        present(imagePickerController, animated: true)
     }
     
     //MARK:- CompositeImageVCDelegate methods
