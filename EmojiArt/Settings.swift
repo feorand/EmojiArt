@@ -21,4 +21,11 @@ struct EmojiSettings {
 struct SegueSettings {
     static let PresentDynamicCollection = "presentDynamicCollection"
     static let PresentCompositeImage = "presentCompositeImage"
+    static let PresentStats = "presentStats"
+    static let PresentStatsEmbedded = "presentStatsEmbedded"
+}
+
+struct DocumentStatsSettings {
+    static let HorizontalPadding: CGFloat = 30.0
+    static let VerticalPadding: CGFloat = 30.0
 }

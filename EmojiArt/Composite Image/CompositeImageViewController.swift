@@ -40,6 +40,10 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     var resultView = CompositeImageView()
     
+    var snapshot: UIImage? {
+        return resultView.snapshot
+    }
+    
     var compositeImage: (image: UIImage?, symbols: [UILabel]) {
         return (image, symbols)
     }
@@ -121,6 +125,15 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
             let position = session.location(in: self.resultView)
             resultView.addSymbol(symbol, position: position)
             delegate?.compositeImageVCDidUpdateImage(compositeImage, snapshot: resultView.snapshot)
+            
+            NotificationCenter.default.post(
+                name: .CompositeImageDidChange,
+                object: self,
+                userInfo: [
+                    "image": compositeImage,
+                    "snapshot": resultView.snapshot as Any
+                ]
+            )
         } else {
             print("Unknown object dropped")
         }

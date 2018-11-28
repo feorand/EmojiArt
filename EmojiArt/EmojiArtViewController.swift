@@ -10,6 +10,12 @@ import UIKit
 
 class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate
 {
+    //MARK:- Outlets
+    
+    @IBOutlet weak var embeddedStatsHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var embeddedStatsWidthConstraint: NSLayoutConstraint!
+    
     //MARK:- Properties
     
     var currentEmojiArt = EmojiArt()
@@ -20,7 +26,11 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var emojiImageVC: CompositeImageViewController!
     
+    var documentStatsVC: StatsViewController!
+    
     var emojiImageDidChangeObserver: NSObjectProtocol!
+    
+    var documentStateDidChangeObserver: NSObjectProtocol!
     
     //MARK:- ViewController life cycle
     
@@ -46,8 +56,9 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         emojiImageDidChangeObserver = NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.CompositeImageDidChange,
+            forName: .CompositeImageDidChange,
             object: nil,
             queue: nil,
             using: {[weak self] notification in
@@ -64,15 +75,30 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 self?.document.emojiArt = self!.currentEmojiArt
                 self?.document.thumbnailImage = snapshot
                 self?.document.updateChangeCount(.done)
-
-        }
+            }
+        )
+        
+        documentStateDidChangeObserver = NotificationCenter.default.addObserver(
+            forName: UIDocument.stateChangedNotification,
+            object: document,
+            queue: OperationQueue.main,
+            using: { notification in
+                if self.document.documentState == .normal, let statsVC = self.documentStatsVC {
+                    statsVC.document = self.document
+                    self.embeddedStatsWidthConstraint.constant = statsVC.preferredContentSize.width
+                    self.embeddedStatsHeightConstraint.constant = statsVC.preferredContentSize.height
+                }
+            }
         )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(emojiImageDidChangeObserver)
+        NotificationCenter.default.removeObserver(documentStateDidChangeObserver)
     }
+    
+    //MARK:- Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueSettings.PresentDynamicCollection {
@@ -85,16 +111,33 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 emojiImageVC = compositeImageVC
                 emojiImageVC.delegate = self
             }
+        } else if segue.identifier == SegueSettings.PresentStatsEmbedded {
+            if let destination = segue.destination as? StatsViewController {
+                documentStatsVC = destination
+            }
+        } else if segue.identifier == SegueSettings.PresentStats {
+            if let statsVC = segue.destination as? StatsViewController {
+                if document.thumbnailImage == nil {
+                    document.thumbnailImage = emojiImageVC.snapshot
+                }
+                
+                statsVC.document = document
+                
+                statsVC.modalPresentationStyle = .formSheet
+            }
         }
     }
     
     //MARK:- Actions
     
-    @IBAction func doneButtonPressed() {
+    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+        close()
+    }
+
+    @IBAction func close() {
         dismiss(animated: true) {
             self.document.close()
         }
-
     }
     
     //MARK:- CompositeImageVCDelegate methods
