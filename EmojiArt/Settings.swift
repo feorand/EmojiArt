@@ -9,9 +9,10 @@
 import Foundation
 import CoreGraphics
 
-struct ImageScrollSettings {
+struct ImageSettings {
     static let maxZoom:CGFloat = 5.0
     static let minZoom:CGFloat = 0.1
+    static let photoScale: CGFloat = 0.25
 }
 
 struct EmojiSettings {

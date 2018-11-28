@@ -23,8 +23,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
-            scrollView.maximumZoomScale = ImageScrollSettings.maxZoom
-            scrollView.minimumZoomScale = ImageScrollSettings.minZoom
+            scrollView.maximumZoomScale = ImageSettings.maxZoom
+            scrollView.minimumZoomScale = ImageSettings.minZoom
             scrollView.delegate = self
             scrollView.addSubview(resultView)
         }

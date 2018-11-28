@@ -205,7 +205,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         let originalmage = info[.originalImage] as? UIImage
         let resultImage = editedImage ?? originalmage ?? UIImage()
         
-        emojiImageVC.image = resultImage
+        emojiImageVC.image = resultImage.scaled(by: ImageSettings.photoScale)
         
         imagePickerController?.dismiss(animated: true)
     }
