@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate
+class EmojiArtViewController: UIViewController, CompositeImageViewControllerDelegate, DynamicCollectionViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate
 {
     //MARK:- Outlets
     
     @IBOutlet weak var embeddedStatsHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var embeddedStatsWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var cameraButton: UIBarButtonItem! {
+        didSet {
+            cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        }
+    }
     
     //MARK:- Properties
     
@@ -28,7 +35,11 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var documentStatsVC: StatsViewController!
     
-    var emojiImageDidChangeObserver: NSObjectProtocol!
+    var emojiImageDidChangeObserver: NSObjectProtocol! {
+        didSet {
+            
+        }
+    }
     
     var documentStateDidChangeObserver: NSObjectProtocol!
     
@@ -52,10 +63,6 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 }
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         emojiImageDidChangeObserver = NotificationCenter.default.addObserver(
             forName: .CompositeImageDidChange,
@@ -67,14 +74,7 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 let image = userInfo?["image"] as? (UIImage?, [UILabel])
                 let snapshot = userInfo?["snapshot"] as? UIImage
                 
-                self?.currentEmojiArt.image.backgroundImageData = image?.0?.pngData()
-                
-                self?.currentEmojiArt.image.emoji = (image?.1 ?? [])
-                    .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }
-                
-                self?.document.emojiArt = self!.currentEmojiArt
-                self?.document.thumbnailImage = snapshot
-                self?.document.updateChangeCount(.done)
+                self?.documentChanged(image: image, snapshot: snapshot)
             }
         )
         
@@ -92,10 +92,15 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         )
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(emojiImageDidChangeObserver)
-        NotificationCenter.default.removeObserver(documentStateDidChangeObserver)
+    private func documentChanged(image: (UIImage?, [UILabel])?, snapshot: UIImage?) {
+        currentEmojiArt.image.backgroundImageData = image?.0?.pngData()
+        
+        currentEmojiArt.image.emoji = (image?.1 ?? [])
+            .map{ EmojiInfo(fromAttributedString: $0.attributedText!, andPosition: $0.center) }
+        
+        document.emojiArt = currentEmojiArt
+        document.thumbnailImage = snapshot
+        document.updateChangeCount(.done)
     }
     
     //MARK:- Segues
@@ -124,6 +129,10 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
                 statsVC.document = document
                 
                 statsVC.modalPresentationStyle = .formSheet
+                
+                if let popoverVC = statsVC.popoverPresentationController {
+                    popoverVC.delegate = self
+                }
             }
         }
     }
@@ -136,8 +145,33 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
 
     @IBAction func close() {
         dismiss(animated: true) {
+            NotificationCenter.default.removeObserver(self.emojiImageDidChangeObserver)
+            NotificationCenter.default.removeObserver(self.documentStateDidChangeObserver)
             self.document.close()
         }
+    }
+    
+    @IBAction func cameraButtonTapped() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            print("camera not available")
+            return
+        }
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        let availableMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera)
+        
+        guard let media = availableMediaTypes, media.contains(kUTTypeImage as String) else {
+            print("image media type is not available")
+            return
+        }
+        
+        imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        imagePickerController.sourceType = .camera
+        
+        present(imagePickerController, animated: true)
     }
     
     //MARK:- CompositeImageVCDelegate methods
@@ -159,5 +193,31 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         if currentEmojiArt.possibleEmoji != items {
             currentEmojiArt.possibleEmoji = items
         }
+    }
+    
+    //MARK:- ImagePickerVCDelegate methods
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let editedImage = info[.editedImage] as? UIImage
+        let originalmage = info[.originalImage] as? UIImage
+        let resultImage = editedImage ?? originalmage ?? UIImage()
+        
+        picker.dismiss(animated: true) {
+            self.emojiImageVC.image = resultImage.scaled(by: ImageSettings.photoScale)
+            
+            let snapshot = self.emojiImageVC.snapshot
+            let image = self.emojiImageVC.compositeImage
+            self.documentChanged(image: image, snapshot: snapshot)
+        }
+    }
+    
+    //MARK:- PopoverPresentationVCDelegate Methods
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }

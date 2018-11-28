@@ -19,6 +19,7 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
             collectionView.dataSource = self
             collectionView.dragDelegate = self
             collectionView.dropDelegate = self
+            collectionView.dragInteractionEnabled = true
         }
     }
 
@@ -38,7 +39,7 @@ class DynamicCollectionViewController: UIViewController, UICollectionViewDragDel
     }
     
     var isAdding = false
-            
+    
     //MARK:- Data Source
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

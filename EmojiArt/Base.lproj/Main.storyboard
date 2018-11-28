@@ -335,9 +335,15 @@
                                     </segue>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem systemItem="camera" id="prO-DH-szz">
+                                <connections>
+                                    <action selector="cameraButtonTapped" destination="BYZ-38-t0r" id="0dm-VY-uHB"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraButton" destination="prO-DH-szz" id="tDQ-MC-9gr"/>
                         <outlet property="embeddedStatsHeightConstraint" destination="As1-42-wY8" id="J16-xC-M72"/>
                         <outlet property="embeddedStatsWidthConstraint" destination="pgO-cA-Sez" id="WbZ-Rg-ptE"/>
                     </connections>
