@@ -18,11 +18,11 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     @IBOutlet weak var embeddedStatsWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-//    {
-//        didSet {
-//            cameraButton.isEnabled = UIImagePickerController.isCameraDeviceAvailable(.front) || UIImagePickerController.isCameraDeviceAvailable(.rear)
-//        }
-//    }
+    {
+        didSet {
+            cameraButton.isEnabled = UIImagePickerController.isCameraDeviceAvailable(.front) || UIImagePickerController.isCameraDeviceAvailable(.rear)
+        }
+    }
     
     //MARK:- Properties
     

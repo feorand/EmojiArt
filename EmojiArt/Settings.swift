@@ -12,7 +12,7 @@ import CoreGraphics
 struct ImageSettings {
     static let maxZoom:CGFloat = 5.0
     static let minZoom:CGFloat = 0.1
-    static let photoScale: CGFloat = 0.25
+    static let photoScale: CGFloat = 0.5
 }
 
 struct EmojiSettings {
