@@ -40,6 +40,8 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     var documentStateDidChangeObserver: NSObjectProtocol!
     
+    var imagePickerController: UIImagePickerController?
+    
     //MARK:- ViewController life cycle
     
     override func loadView() {
@@ -153,8 +155,9 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
             print("camera not available")
             return
         }
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
+        
+        imagePickerController = UIImagePickerController()
+        imagePickerController?.delegate = self
         
         let availableMediaTypes = UIImagePickerController.availableMediaTypes(for: .camera)
         
@@ -163,11 +166,11 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
             return
         }
         
-        imagePickerController.allowsEditing = true
-        imagePickerController.mediaTypes = [kUTTypeImage as String]
-        imagePickerController.sourceType = .camera
+        imagePickerController?.allowsEditing = true
+        imagePickerController?.mediaTypes = [kUTTypeImage as String]
+        imagePickerController?.sourceType = .camera
         
-        present(imagePickerController, animated: true)
+        present(imagePickerController!, animated: true)
     }
     
     //MARK:- CompositeImageVCDelegate methods
@@ -189,5 +192,21 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         if currentEmojiArt.possibleEmoji != items {
             currentEmojiArt.possibleEmoji = items
         }
+    }
+    
+    //MARK:- ImagePickerVCDelegate methods
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePickerController?.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let editedImage = info[.editedImage] as? UIImage
+        let originalmage = info[.originalImage] as? UIImage
+        let resultImage = editedImage ?? originalmage ?? UIImage()
+        
+        emojiImageVC.image = resultImage
+        
+        imagePickerController?.dismiss(animated: true)
     }
 }
