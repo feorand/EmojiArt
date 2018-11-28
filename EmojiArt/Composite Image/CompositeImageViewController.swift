@@ -23,8 +23,8 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
-            scrollView.maximumZoomScale = ImageScrollSettings.maxZoom
-            scrollView.minimumZoomScale = ImageScrollSettings.minZoom
+            scrollView.maximumZoomScale = ImageSettings.maxZoom
+            scrollView.minimumZoomScale = ImageSettings.minZoom
             scrollView.delegate = self
             scrollView.addSubview(resultView)
         }
@@ -40,6 +40,10 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     var resultView = CompositeImageView()
     
+    var snapshot: UIImage? {
+        return resultView.snapshot
+    }
+    
     var compositeImage: (image: UIImage?, symbols: [UILabel]) {
         return (image, symbols)
     }
@@ -54,16 +58,19 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
         }
         
         set {
-            let size = newValue?.size ?? CGSize.zero
+            scrollView.zoomScale = 1.0
             
             resultView.changeBackgroundImage(to: newValue)
             
+            let size = newValue?.size ?? CGSize.zero
+            scrollView.contentSize = size
+            
+            scrollWidthConstraint.constant = size.width
+            scrollHeightConstraint.constant = size.height
+            
             if let dropView = dropView, size.width > 0, size.height > 0 {
-                scrollView?.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
-            } else {
-                scrollView?.zoomScale = 1.0
+                scrollView.zoomScale = max(dropView.bounds.size.width / size.width, dropView.bounds.size.height / size.height)
             }
-            scrollView?.contentSize = size
             
             dropImageHereLabel?.isHidden = true
             dropView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -76,8 +83,7 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     //MARK:- Drop
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        return session.canLoadObjects(ofClass: NSURL.self) &&
-            session.canLoadObjects(ofClass: UIImage.self) ||
+        return session.canLoadObjects(ofClass: NSURL.self) ||
             session.canLoadObjects(ofClass: NSAttributedString.self)
     }
     
@@ -87,25 +93,47 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         if session.localDragSession?.localContext as? UICollectionView == nil {
-            // First load a miniature of an image so user has something to see
-            session.loadObjects(ofClass: UIImage.self) { [weak self] images in
-                if let imageItem = images.first, let image = imageItem as? UIImage {
-                    self?.image = image
-                    self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
+            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
+                if let urlItem = urls.first, let url = urlItem as? URL {
+                    self?.fetchImage(imageURL: url) { imageData in
+                        if let imageData = imageData, let image = UIImage(data: imageData) {
+                            DispatchQueue.main.async {
+                                self?.image = image
+                                self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
+                                
+                                if let imageVC = self {
+                                    NotificationCenter.default.post(
+                                        name: .CompositeImageDidChange,
+                                        object: imageVC,
+                                        userInfo: [
+                                            "image": imageVC.compositeImage,
+                                            "snapshot": imageVC.resultView.snapshot as Any
+                                        ]
+                                    )
+                                }
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self?.showFetchingFailed()
+                            }
+                        }
+                    }
                 }
             }
-//
-//            // Then load a full image from net (may be slow)
-//            session.loadObjects(ofClass: NSURL.self) { [weak self] urls in
-//                if let urlItem = urls.first, let url = urlItem as? URL {
-//                    self?.setImageFromNetAsync(imageURL: url)
-//                }
-//            }
             
         } else if let symbol = session.items.first?.localObject as? NSAttributedString {
             let position = session.location(in: self.resultView)
             resultView.addSymbol(symbol, position: position)
             delegate?.compositeImageVCDidUpdateImage(compositeImage, snapshot: resultView.snapshot)
+            
+            NotificationCenter.default.post(
+                name: .CompositeImageDidChange,
+                object: self,
+                userInfo: [
+                    "image": compositeImage,
+                    "snapshot": resultView.snapshot as Any
+                ]
+            )
         } else {
             print("Unknown object dropped")
         }
@@ -128,18 +156,25 @@ class CompositeImageViewController: UIViewController, UIScrollViewDelegate, UIDr
     
     //MARK:- Utilities
     
-    private func setImageFromNetAsync(imageURL: URL?) {
+    private func fetchImage(imageURL: URL?, completionHandler: @escaping ((Data?) -> Void)) {
         if let url = imageURL {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let imageData = try? Data(contentsOf: url)
-                if let imageData = imageData, let image = UIImage(data: imageData) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                        self?.delegate?.compositeImageVCDidUpdateImage(self!.compositeImage, snapshot: self!.resultView.snapshot)
-
-                    }
-                }
+            DispatchQueue.global(qos: .userInitiated).async {
+                let imageData = try? Data(contentsOf: url.networkImageURL)
+                completionHandler(imageData)
             }
         }
+    }
+    
+    private func showFetchingFailed() {
+        let alert = UIAlertController(
+            title: "Error",
+            message: "Could not download image from Web",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "Not OK", style: .destructive, handler: nil))
+        
+        present(alert, animated: true)
     }
 }
