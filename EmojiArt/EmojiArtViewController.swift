@@ -16,6 +16,12 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
     
     @IBOutlet weak var embeddedStatsWidthConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var cameraButton: UIBarButtonItem! {
+        didSet {
+            cameraButton.isEnabled = UIImagePickerController.isCameraDeviceAvailable(.front) || UIImagePickerController.isCameraDeviceAvailable(.rear)
+        }
+    }
+    
     //MARK:- Properties
     
     var currentEmojiArt = EmojiArt()
@@ -138,6 +144,10 @@ class EmojiArtViewController: UIViewController, CompositeImageViewControllerDele
         dismiss(animated: true) {
             self.document.close()
         }
+    }
+    
+    @IBAction func cameraButtonTapped() {
+        //TODO: Make actual tapped code
     }
     
     //MARK:- CompositeImageVCDelegate methods
